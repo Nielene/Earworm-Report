@@ -6,6 +6,10 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var genreRouter = require('./routes/genres');
+var songRouter = require('./routes/songs');
+var favoriteRouter = require('./routes/favorites');
+var commentRouter = require('./routes/comments');
 
 var app = express();
 
@@ -21,6 +25,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/genres', genreRouter);
+app.use('/songs', songRouter);
+app.use('/favorites', favoriteRouter);
+app.use('/comments', commentRouter);
 
 app.get('*', (req, res) => {
   res.json('🙀 😪 😭  Don t be scared. I don t think this is where you want to be. (check your routing sweetie)')
