@@ -1,15 +1,30 @@
 .navbar {
-  background-color: red;
+  /* background-color: red; */
   display: flex;
   flex-direction: row;
   height: 50px;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+
+  /* must have: */
+  padding-bottom: 15px;
+
 }
 
 .leftNavBar {
-  margin-right: 50%;
-
+  display: flex;
+  width: 20%;
+  justify-content: flex-start;
+  margin-left: 10px;
+}
+.leftNavBar p {
+  font-weight: bold;
 }
 
 .rightNavBar {
-
+  display: flex;
+  width: 400px;
+  justify-content: flex-end;
+  margin-right: 10px;
+  justify-content: space-between;
 }

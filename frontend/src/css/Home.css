@@ -1,0 +1,25 @@
+.mainBodyDiv {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
+.mainBody {
+  display: flex;
+  width: 80%;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  /* background-color: red; */
+  justify-content: center;
+}
+
+
+.homepageTitle {
+  display: flex;
+  justify-content: center;
+}
+
+.homepageTitle h1 {
+  font-size: 50px;
+  font-weight: normal;
+}
