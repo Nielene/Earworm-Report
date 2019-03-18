@@ -1,0 +1,3 @@
+export const FETCH_ALL_SONGS = 'FETCH_ALL_SONGS';
+
+export const FETCH_ALL_USERS = 'FETCH_ALL_USERS';

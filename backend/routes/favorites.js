@@ -4,11 +4,10 @@ const db = require('../db/queries/favoriteQueries');
 
 
 router.get('/', db.getAllFavorites );     // http://localhost:3100/users
-router.get('/', db.getAllFavoritesForSpecificSong)
-router.get('/', db.getAllFavoritesForSpecificUser);
+router.get('/song/:song_id', db.getAllFavoritesForSpecificSong)
+router.get('/user/:user_id', db.getAllFavoritesForSpecificUser);
 
-router.post('/', db.postNewFavorite);
-
-router.delete('/:song_id', db.deleteSingleFavorite);
+router.post('/user/:song_id', db.postNewFavorite);    //??
+router.delete('/user/:song_id', db.deleteSingleFavorite);
 
 module.exports = router;

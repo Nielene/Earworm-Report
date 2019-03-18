@@ -1,0 +1,15 @@
+.navbar {
+  background-color: red;
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+}
+
+.leftNavBar {
+  margin-right: 50%;
+
+}
+
+.rightNavBar {
+
+}
