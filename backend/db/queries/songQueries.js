@@ -22,7 +22,7 @@ const getAllSongs = (req, res, next) => {
   })
 }
 
-
+// router.get('songs/genre/:genre_id', db.getAllSongsForSpecificGenre)
 const getAllSongsForSpecificGenre = (req, res, next) => {
   let genreId = parseInt(req.params.genre_id);
   db.any(

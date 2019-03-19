@@ -23,6 +23,7 @@ class AllSongs extends Component {
     e.preventDefault();
     this.setState({
       formSubmitted: true,
+      
     })
   }
 
