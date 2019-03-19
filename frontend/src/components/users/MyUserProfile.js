@@ -8,21 +8,21 @@ import { fetchAllSongsPostedBySpecificUser } from '../../actions/songActions';
 
 
 
-class UserProfile extends Component {
+class MyUserProfile extends Component {
   componentDidMount() {
-    this.props.fetchAllSongsPostedBySpecificUser(this.props.match.params.user_id);
+    const user_id = 1;
+    this.props.fetchAllSongsPostedBySpecificUser(user_id);
     // console.log(this.props, 'hello');
     // debugger
   }
 
   render () {
-    console.log(this.props, 'userProfile');
+    console.log('MyUserProfile props', this.props);
+    console.log(this.props.all_songs_by_user[0]);
 
-    const songItems = this.props.all_songs_by_user.map(song => {
-    
+    const username = '';
 
-      return (
-
+    const songItems = this.props.all_songs_by_user.map(song => (
       <div key={song.song_id}>
 
         <div className=''>
@@ -35,14 +35,11 @@ class UserProfile extends Component {
 
           <div className=''>
             <Link to='' style={{ textDecoration: 'none' }} >
-              <h2>{song.title}</h2>
-            </Link>
+              <h2>{song.title}</h2></Link>
           </div>
 
           <div className=''>
-            <Link to={'/profile/' + song.user_id} style={{ textDecoration: 'none' }} >
-              <h4>{song.username}</h4>
-            </Link>
+            <h4>{song.username}</h4>
           </div>
 
           <div className=''>
@@ -52,15 +49,15 @@ class UserProfile extends Component {
         </div>
 
       </div>
-    )
-  })
+    ))
 
     return (
 
         <div className='mainBodyDiv'>
           <div className='mainBody userProfile'>
+
             <div className='usernameTitle'>
-              <h1> User Name </h1>
+              <h1> User Name {username}</h1>
             </div>
 
             <form className='form'>
@@ -74,10 +71,24 @@ class UserProfile extends Component {
                   </div>
                 </div>
 
+              <div className='addNewSongDiv'>
+                <p>Add New Song</p>
+                <div className='addNewSong'>
+                  <div className='addNewSongTextInput'>
+                    <input type='text' />
+                  </div>
+                  <div className='addNewSongSubmitButton'>
+                    <button type='submit' > Submit</button>
+                  </div>
+                </div>
+              </div>
+
             </form>
 
-            <div className='songListDiv'>
+            <div className = 'songListDiv'>
               <div>
+                {/*
+                  */}
                 {songItems}
               </div>
             </div>
@@ -95,8 +106,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchAllSongsPostedBySpecificUser: id => dispatch(fetchAllSongsPostedBySpecificUser(id)),
+    fetchAllSongsPostedBySpecificUser: (id) => dispatch(fetchAllSongsPostedBySpecificUser(id)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps )(UserProfile);
+export default connect(mapStateToProps, mapDispatchToProps )(MyUserProfile);

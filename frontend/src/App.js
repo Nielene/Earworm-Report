@@ -7,6 +7,7 @@ import Home from './components/home/Home'
 import AllSongs from './components/songs/AllSongs';
 import SongsByPopularity from './components/songs/SongsByPopularity';
 import SongsByGenreId from './components/songs/SongsByGenreId';
+import MyUserProfile from './components/users/MyUserProfile';
 import UserProfile from './components/users/UserProfile';
 
 
@@ -20,6 +21,7 @@ class App extends Component {
             <Route exact path="/songs" render={ (props) => <AllSongs {...props} /> } />
             <Route path='/songs/byPopularity' render={(props) => <SongsByPopularity {...props} /> } />
             <Route path='/songs/byGenre' render={(props) => <SongsByGenreId {...props} /> } />
+            <Route exact path='/profile/' render = { (props) => <MyUserProfile {...props} /> } />
             <Route path='/profile/:user_id' render = { (props) => <UserProfile {...props} /> } />
         </Switch>
       </div>

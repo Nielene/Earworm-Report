@@ -48,7 +48,13 @@ class AllSongs extends Component {
       songArray = filteredSongs
     }
 
-    const songItems = songArray.map(song => (
+    const songItems = songArray.map(song => {
+      console.log('userprofile', song.user_id);
+      if (song.user_id === 1) {
+        song.user_id = '';
+      }
+
+      return(
       <div key={song.song_id}>
 
         <Link to='' style={{textDecoration: 'none'}} >
@@ -59,8 +65,17 @@ class AllSongs extends Component {
           <h2>{song.title} </h2>
         </Link>
 
+        <Link to={'/profile/' + song.user_id} style={{textDecoration: 'none'}} >
+          <p>{song.username} </p>
+        </Link>
+
+        <p>NUMBER OF FAVORITES</p>
+
+        <button> Favorite </button>
+
       </div>
-    ))
+    )
+  })
 
     return (
         <div className=''>

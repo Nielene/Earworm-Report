@@ -18,7 +18,7 @@ class Navbar extends Component {
               <Link to='/songs' style={{textDecoration: 'none' }}> <p>All Songs </p></Link> {' '}
               <Link to='/songs/byPopularity' style={{textDecoration: 'none' }}> <p> By Popularity </p></Link> {' '}
               <Link to='/songs/byGenre' style={{textDecoration: 'none' }}> <p>By Genre </p> </Link> {' '}
-              <Link to='/profile/:user_id' style={{textDecoration: 'none' }}> <p>My Profile </p></Link> {' '}
+              <Link to='/profile/' style={{textDecoration: 'none' }}> <p>My Profile </p></Link> {' '}
             </div>
         </div>
       </nav>
