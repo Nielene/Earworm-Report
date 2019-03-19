@@ -2,13 +2,12 @@
   /* background-color: red; */
   display: flex;
   flex-direction: row;
-  height: 50px;
   justify-content: space-between;
   border-bottom: 1px solid black;
 
   /* must have: */
-  padding-bottom: 15px;
-
+  height: 75px;
+  width: 100%;
 }
 
 .leftNavBar {

@@ -12,7 +12,7 @@ export default function (state = initialState, action ) {
         ...state,
         all_songs: action.payload
       }
-    
+
     default:
       return state;
   }

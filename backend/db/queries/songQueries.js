@@ -3,18 +3,19 @@ const { db } = require('../index.js');
 
 // Postman: http://localhost:3000/users
 const getAllSongs = (req, res, next) => {
-  db.any('SELECT songs.id AS song_id, title, img_url, user_id, genre_id, username, genre_name FROM songs JOIN genres ON genres.id = songs.genre_id JOIN users ON songs.user_id = users.id').then(animals => {
+  db.any('SELECT songs.id AS song_id, title, img_url, user_id, genre_id, username, genre_name FROM songs JOIN genres ON genres.id = songs.genre_id JOIN users ON songs.user_id = users.id')
+  .then(songs => {
     res.status(200)
     res.json({
       status: 'success',
-      message: 'Got all Animals.',
-      body: animals
+      message: 'Got all Songs.',
+      songs: songs
     })
   }).catch(err => {
     res.status(400)
     .json({
       status: 'error',
-      message: " 🤣 Na nana na nah. You didn't get your Animals!😝 "
+      message: " 🤣 Na nana na nah. You didn't get your Songs!😝 "
     })
     console.log(err);
     next();

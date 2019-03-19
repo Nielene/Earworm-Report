@@ -2,18 +2,25 @@
   display: flex;
   justify-content: center;
   height: 100vh;
+
 }
 
 .mainBody {
   display: flex;
-  width: 80%;
   border-left: 1px solid black;
   border-right: 1px solid black;
   /* background-color: red; */
+
+  /* must have: */
   justify-content: center;
+  width: 80%;
+  padding-top: 15px;
+  min-width: 800px;
+  height: auto;
+
 }
 
-
+/* HomePage  */
 .homepageTitle {
   display: flex;
   justify-content: center;
@@ -22,4 +29,79 @@
 .homepageTitle h1 {
   font-size: 50px;
   font-weight: normal;
+  margin: 0px;
+  padding-top: 100px;
+}
+
+/* UserProfile */
+/* UserProfile */
+
+.userProfile {
+  display: flex;
+  flex-direction: column;
+}
+
+.usernameTitle {
+  display: flex;
+  justify-content: center;
+
+  margin: 0px;
+  height: 50px;
+}
+.usernameTitle h1 {
+  margin: 0px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  align-items: center;
+
+}
+
+.postedAndFavoritedButtonsDiv {
+  display: flex;
+  flex-direction: row;
+  /* background-color: red; */
+  width: 50%;
+  height: 30px;
+  justify-content: space-between;
+}
+.leftPostedbutton button {
+  width: 100px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid lightgrey;
+}
+.rightFavoritedButton button {
+  width: 100px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid lightgrey;
+
+}
+
+.addNewSongDiv {
+  display: flex;
+  flex-direction: column;
+}
+.addNewSongDiv p {
+  text-align: center;
+}
+.addNewSong {
+  display: flex;
+  flex-direction: row;
+  width: 275px;
+  justify-content: space-between;
+}
+.addNewSongTextInput input {
+  width: 175px;
+  height: 20px;
+}
+.addNewSongSubmitButton button {
+  width: 75px;
+  height: 25px;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
 }
