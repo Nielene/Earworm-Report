@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { fetchAllSongsPostedBySpecificUser } from '../../actions/songActions';
-
-// import '../../css/home/UserProfile.css';
+import { fetchSingleUser } from '../../actions/userActions';
 
 
 
@@ -12,21 +11,21 @@ class MyUserProfile extends Component {
   componentDidMount() {
     const user_id = 1;
     this.props.fetchAllSongsPostedBySpecificUser(user_id);
+    this.props.fetchSingleUser(user_id);
+
     // console.log(this.props, 'hello');
     // debugger
   }
 
   render () {
-    console.log('MyUserProfile props', this.props);
-    console.log(this.props.all_songs_by_user[0]);
+    // console.log('MyUserProfile props', this.props);
+    // console.log('MyUserProfile', this.props.single_user.username);
 
-    const username = '';
+    const username = this.props.single_user.username;
 
     const songItems = this.props.all_songs_by_user.map(song => (
       <div key={song.song_id}>
-
         <div className=''>
-
           <div className=''>
             <Link to= '' style={{textDecoration: 'none' }} >
               <img src={song.img_url} alt='' width='50' />
@@ -57,7 +56,7 @@ class MyUserProfile extends Component {
           <div className='mainBody userProfile'>
 
             <div className='usernameTitle'>
-              <h1> User Name {username}</h1>
+              <h1> {username}</h1>
             </div>
 
             <form className='form'>
@@ -102,11 +101,13 @@ class MyUserProfile extends Component {
 
 const mapStateToProps = state => ({
   all_songs_by_user: state.songs.all_songs_by_user,
+  single_user: state.users.single_user,
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchAllSongsPostedBySpecificUser: (id) => dispatch(fetchAllSongsPostedBySpecificUser(id)),
+    fetchSingleUser: (id) => dispatch(fetchSingleUser(id)),
   };
 };
 

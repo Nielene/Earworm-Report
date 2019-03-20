@@ -29,8 +29,8 @@ export const fetchAllSongsPostedBySpecificUser = (user_id) => dispatch => {
 export const fetchAllSongsPostedForSpecificGenre = (genre_id) => dispatch => {
   axios.get(`/songs/genre/${genre_id}`)
   .then(res => {
-    console.log(res);
-    debugger
+    // console.log(res);
+    // debugger
     dispatch({
       type: FETCH_ALL_SONGS_BY_GENRE,
       payload: res.data.songs

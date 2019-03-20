@@ -3,30 +3,27 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { fetchAllSongsPostedBySpecificUser } from '../../actions/songActions';
-
-// import '../../css/home/UserProfile.css';
-
+import { fetchSingleUser } from '../../actions/userActions';
 
 
 class UserProfile extends Component {
   componentDidMount() {
     this.props.fetchAllSongsPostedBySpecificUser(this.props.match.params.user_id);
+    this.props.fetchSingleUser(this.props.match.params.user_id);
+
     // console.log(this.props, 'hello');
     // debugger
   }
 
   render () {
-    console.log(this.props, 'userProfile');
+    // console.log(this.props, 'userProfile');
+
+    const username = this.props.single_user.username;
 
     const songItems = this.props.all_songs_by_user.map(song => {
-    
-
       return (
-
       <div key={song.song_id}>
-
         <div className=''>
-
           <div className=''>
             <Link to= '' style={{textDecoration: 'none' }} >
               <img src={song.img_url} alt='' width='50' />
@@ -60,7 +57,7 @@ class UserProfile extends Component {
         <div className='mainBodyDiv'>
           <div className='mainBody userProfile'>
             <div className='usernameTitle'>
-              <h1> User Name </h1>
+              <h1> {username} </h1>
             </div>
 
             <form className='form'>
@@ -91,11 +88,15 @@ class UserProfile extends Component {
 
 const mapStateToProps = state => ({
   all_songs_by_user: state.songs.all_songs_by_user,
+  single_user: state.users.single_user,
+
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchAllSongsPostedBySpecificUser: id => dispatch(fetchAllSongsPostedBySpecificUser(id)),
+    fetchSingleUser: (id) => dispatch(fetchSingleUser(id)),
+
   };
 };
 

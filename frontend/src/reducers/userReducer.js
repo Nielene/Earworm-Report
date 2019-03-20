@@ -1,8 +1,8 @@
-import { FETCH_ALL_USERS } from '../actions/types';
+import { FETCH_ALL_USERS, FETCH_SINGLE_USER } from '../actions/types';
 
 const initialState = {
-  all_songs: [],
-
+  all_users: [],
+  single_user: '',
 }
 
 export default function (state = initialState, action ) {
@@ -11,6 +11,11 @@ export default function (state = initialState, action ) {
       return {
         ...state,
         all_songs: action.payload
+      }
+    case FETCH_SINGLE_USER:
+      return {
+        ...state,
+        single_user: action.payload
       }
 
     default:
