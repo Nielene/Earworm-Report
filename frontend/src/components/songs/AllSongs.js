@@ -34,7 +34,7 @@ class AllSongs extends Component {
 
   render () {
     console.log(this.props);
-    console.log(this.state);
+    // console.log(this.state);
 
     const { searchedSong, formSubmitted } = this.state;
     const { all_songs } = this.props;
@@ -50,7 +50,7 @@ class AllSongs extends Component {
     }
 
     const songItems = songArray.map(song => {
-      console.log('userprofile', song.user_id);
+      // console.log('userprofile', song.user_id);
       if (song.user_id === 1) {
         song.user_id = '';
       }
@@ -66,6 +66,8 @@ class AllSongs extends Component {
           <h2>{song.title} </h2>
         </Link>
 
+        <p>{song.genre_name}</p>
+
         <Link to={'/profile/' + song.user_id} style={{textDecoration: 'none'}} >
           <p>{song.username} </p>
         </Link>
@@ -73,6 +75,10 @@ class AllSongs extends Component {
         <p>NUMBER OF FAVORITES</p>
 
         <button> Favorite </button>
+
+        <div>
+          {song.comment_body}
+        </div>
 
       </div>
     )

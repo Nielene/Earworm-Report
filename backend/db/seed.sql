@@ -88,11 +88,11 @@ VALUES (1 , 1), (2 , 2), (3 , 3), (4 , 4), (5 , 5), (6 , 6), (7 , 7), (8 , 8), (
 INSERT INTO comments (comment_body, user_id, song_id)
 VALUES ('good song' , 1, 1), ('ear splitting' , 1, 11),
 ('i liked it' , 2, 2), ('learn to drum' , 2, 12),
-('best song' , 3, 3), ('again! why man?' , 3, 13),
-('don''d make them like this anymore' , 4, 4), ('noice.' , 4, 14),
+('best song' , 3, 3), ('again! why, man?' , 3, 13),
+('don''t make them like this anymore' , 4, 4), ('noice.' , 4, 14),
 ('yeah' , 5, 5), ('won''t you be original?' , 5, 15),
-('yes' , 6, 6), ('tonight is the night (for you to shut up!)' , 6, 1),
+('yes' , 6, 6), ('tonight is the night' , 6, 1),
 ('definitely' , 7, 7), ('tomorrow never dies. neither does love. nor this song''s repetitive lines!' , 7, 2),
 ('thanks!' , 8, 8), ('another one!?' , 8, 3),
-('almost as good as ''Best Song Ever''' , 9, 9), ('creep' , 9, 4),
+('almost as good as Best Song Ever' , 9, 9), ('creep' , 9, 4),
 ('Almost, but not quite' , 10, 10), ('did you know we can do this neat thing now: make music' , 10, 5);

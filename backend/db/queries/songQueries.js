@@ -1,9 +1,12 @@
 const { db } = require('../index.js');
 
 
-// Postman: http://localhost:3000/users
+// Postman: http://localhost:3100/songs
 const getAllSongs = (req, res, next) => {
-  db.any('SELECT songs.id AS song_id, title, img_url, user_id, genre_id, username, genre_name FROM songs JOIN genres ON genres.id = songs.genre_id JOIN users ON songs.user_id = users.id ORDER BY songs.id DESC')
+  // db.any('SELECT songs.id AS song_id, title, img_url, user_id, genre_id, username, genre_name FROM songs JOIN genres ON genres.id = songs.genre_id JOIN users ON songs.user_id = users.id ORDER BY songs.id DESC')
+  db.any('SELECT songs.id AS song_id, title, img_url, songs.user_id, genre_id, username, genre_name, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM songs JOIN genres ON genres.id = songs.genre_id JOIN users ON songs.user_id = users.id JOIN comments ON comments.user_id = users.id GROUP BY songs.id, users.username, genres.genre_name ORDER BY songs.id DESC')
+  // db.any('SELECT songs.id AS song_id, title, img_url, songs.user_id, genre_id, username, genre_name, STRING_AGG(comments.comment_body, CHAR(13)) AS comment_body FROM songs JOIN genres ON genres.id = songs.genre_id JOIN users ON songs.user_id = users.id JOIN comments ON comments.user_id = users.id GROUP BY songs.id, users.username, genres.genre_name ORDER BY songs.id DESC')
+  // db.any('SELECT songs.id AS song_id, title, img_url, songs.user_id, genre_id, username, genre_name,     SELECT STRING_AGG (FirstName, CHAR(13)) AS csv         comments.comment_body FROM songs JOIN genres ON genres.id = songs.genre_id JOIN users ON songs.user_id = users.id JOIN comments ON comments.user_id = users.id GROUP BY songs.id, users.username, genres.genre_name, comments.comment_body ORDER BY songs.id DESC')
   .then(songs => {
     res.status(200)
     res.json({

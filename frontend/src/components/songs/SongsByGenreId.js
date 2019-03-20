@@ -24,7 +24,7 @@ class SongsByGenreId extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log('SELECTED GENRE', this.state.selectedGenre);
+    // console.log('SELECTED GENRE', this.state.selectedGenre);
     this.props.fetchAllSongsPostedForSpecificGenre(this.state.selectedGenre)
 
     this.setState({
@@ -39,22 +39,12 @@ class SongsByGenreId extends Component {
 
 
   render () {
-    console.log(this.props);
-    console.log(this.state);
+    // console.log(this.props);
+    // console.log(this.state);
 
     const { selectedGenre, formSubmitted } = this.state;
     const { all_songs, all_songs_by_genre, all_genres } = this.props;
-    //
-    // const filteredSongs = all_songs.filter( song => {
-    //   return song.title.toLowerCase().includes(searchedSong.toLowerCase())
-    // })
-    //
-    // let songArray = all_songs;
-    // if (!formSubmitted) {
-    //   songArray = all_songs
-    // } else if (formSubmitted) {
-    //   songArray = filteredSongs
-    // }
+
 
     let songFilter = all_songs;
     if (selectedGenre && formSubmitted) {
@@ -62,7 +52,6 @@ class SongsByGenreId extends Component {
     } else if (selectedGenre === '' && formSubmitted) {
       songFilter = all_songs
     }
-
 
 
     const songItems = songFilter.map(song => {
@@ -139,7 +128,6 @@ const mapDispatchToProps = dispatch => {
 
   }
 }
-
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(SongsByGenreId);
