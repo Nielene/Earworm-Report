@@ -1,3 +1,4 @@
+// please remove dead code. 
 import { FETCH_ALL_GENRES } from './types';
 import axios from 'axios';
 

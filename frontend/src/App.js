@@ -1,3 +1,6 @@
+// No need to use render in Route unless passing props.
+// Otherwise you can use component. 
+
 import React, { Component } from 'react';
 // import '../css/App.css';
 import { Route, Switch } from 'react-router-dom';

@@ -1,3 +1,5 @@
+// This needs to be made to the specified requirements. 
+
 import React, { Component } from 'react';
 // import '../../css/home/Home.css';
 
