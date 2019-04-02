@@ -35,12 +35,6 @@ class AllSongs extends Component {
   handleCommentSubmit = (e) => {
     e.preventDefault();
 
-    // if (this.state.body && this.state.commentSubmitted) {
-      // const addComment = {comment_body: this.state.body}
-      // const songId = {song_id: this.state.song.song_id}
-      // const userId = '1'
-      // this.props.postSingleSongComment(songId, addComment)
-
       this.setState({
         body: '',
         commentSubmitted: true,
@@ -89,17 +83,6 @@ class AllSongs extends Component {
     } else if (formSubmitted) {
       songArray = filteredSongs
     }
-
-
-    // const commentItems = this.props.all_comments.map (comment => {
-    //   return (
-    //     <div key={comment.song_id}>
-    //       <li>{comment.song_id}</li>
-    //       <li>{comment.comment_body}</li>
-    //     </div>
-    //   )
-    // })
-
 
 
 

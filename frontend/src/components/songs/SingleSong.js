@@ -106,11 +106,15 @@ class SingleSong extends Component {
                   </Link>
                 </div>
 
-                <div className='allButSongTitleRow'>
+                <div className='allButSongTitleRow allButSongTitleRowForGenre'>
                   <div className='userName'>
                     <Link to={'/profile/' + this.props.song.user_id} style={{textDecoration: 'none'}} >
                       <p>{this.props.song.username} </p>
                     </Link>
+                  </div>
+
+                  <div className='genreName'>
+                    <p>{this.props.song.genre_name} </p>
                   </div>
 
                   <div className='favoriteCount'>
@@ -144,6 +148,15 @@ class SingleSong extends Component {
 
       </div>
       )
+
+
+
+
+
+
+
+
+
     }
 }
 
