@@ -10,7 +10,7 @@ class Home extends Component {
 
     return (
       <div className='mainBodyDiv'>
-        <div className='mainBody'>
+        <div className='mainBody mainBodyByHome'>
           <div className='homepageTitle'>
             <h1> Earworm Report </h1>
           </div>

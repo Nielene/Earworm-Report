@@ -24,9 +24,9 @@ const getAllComments = (req, res, next) => {
 
 const getAllCommentsForSpecificSong = (req, res, next) => {
   let songId = parseInt(req.params.song_id);
+  // let songId = parseInt(req.body.song_id);
   db.any(
-    // `SELECT movies.id AS song_id, Array_agg(comment_text) FROM movies JOIN comments ON movies.id = comments.song_id WHERE movies.id = $1 GROUP BY movies.id`, [songId]
-    `SELECT songs.id AS song_id, comments.id, comment_body FROM songs JOIN comments ON songs.id = comments.song_id WHERE songs.id = $1 GROUP BY songs.id, comments.id`, [songId]
+    `SELECT songs.id AS song_id, comments.id AS comment_id, comment_body FROM songs JOIN comments ON songs.id = comments.song_id WHERE songs.id = $1 GROUP BY songs.id, comments.id`, [songId]
   )
   .then(comments => {
     res.status(200).json({
@@ -50,9 +50,9 @@ const getAllCommentsForSpecificSong = (req, res, next) => {
 // incomplete:
 const postNewComment = (req, res, next) => {
   db.none("INSERT INTO comments(comment_body, user_id, song_id) VALUES(${comment_body}, ${user_id}, ${song_id})", {
-    ...req.body
-    // ,
-    // user_id: parseInt(req.params.id)
+    ...req.body,
+    song_id: parseInt(req.params.song_id),
+    user_id: 1
   })
   .then(() => {
     res.status(200).json({
@@ -64,7 +64,7 @@ const postNewComment = (req, res, next) => {
     res.status(400)
     .json({
       status: 'error',
-      message: " 🤣 Na nana na nah. You didn't get your Songs!😝 "
+      message: " 🤣 Na nana na nah. You didn't post your COMMENT!😝 "
     })
     console.log(err);
     next();

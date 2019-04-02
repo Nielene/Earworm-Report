@@ -4,6 +4,8 @@ const db = require('../db/queries/songQueries');
 
 
 router.get('/', db.getAllSongs );     // http://localhost:3100/users
+router.get('/byPopularity', db.getAllSongsByPopularity );     // http://localhost:3100/users
+
 router.post('/', db.postNewSong);
 
 router.get('/:song_id', db.getOneSong);

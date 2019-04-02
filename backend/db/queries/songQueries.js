@@ -3,10 +3,29 @@ const { db } = require('../index.js');
 
 // Postman: http://localhost:3100/songs
 const getAllSongs = (req, res, next) => {
-  // db.any('SELECT songs.id AS song_id, title, img_url, user_id, genre_id, username, genre_name FROM songs JOIN genres ON genres.id = songs.genre_id JOIN users ON songs.user_id = users.id ORDER BY songs.id DESC')
-  db.any('SELECT songs.id AS song_id, title, img_url, songs.user_id, genre_id, username, genre_name, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM songs JOIN genres ON genres.id = songs.genre_id JOIN users ON songs.user_id = users.id JOIN comments ON comments.user_id = users.id GROUP BY songs.id, users.username, genres.genre_name ORDER BY songs.id DESC')
-  // db.any('SELECT songs.id AS song_id, title, img_url, songs.user_id, genre_id, username, genre_name, STRING_AGG(comments.comment_body, CHAR(13)) AS comment_body FROM songs JOIN genres ON genres.id = songs.genre_id JOIN users ON songs.user_id = users.id JOIN comments ON comments.user_id = users.id GROUP BY songs.id, users.username, genres.genre_name ORDER BY songs.id DESC')
-  // db.any('SELECT songs.id AS song_id, title, img_url, songs.user_id, genre_id, username, genre_name,     SELECT STRING_AGG (FirstName, CHAR(13)) AS csv         comments.comment_body FROM songs JOIN genres ON genres.id = songs.genre_id JOIN users ON songs.user_id = users.id JOIN comments ON comments.user_id = users.id GROUP BY songs.id, users.username, genres.genre_name, comments.comment_body ORDER BY songs.id DESC')
+  db.any('SELECT songs.id AS song_id, title, img_url, songs.user_id, genre_id, username, genre_name, COUNT(favorites.user_id) AS favorite_count, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM songs JOIN genres ON genres.id = songs.genre_id JOIN users ON songs.user_id = users.id JOIN comments ON comments.song_id = songs.id JOIN favorites ON favorites.song_id = songs.id GROUP BY songs.id, users.username, genres.genre_name ORDER BY songs.id DESC')
+  .then(songs => {
+    res.status(200)
+    res.json({
+      status: 'success',
+      message: 'Got all Songs.',
+      songs: songs
+    })
+  })
+  .catch(err => {
+    res.status(400)
+    .json({
+      status: 'error',
+      message: " 🤣 Na nana na nah. You didn't get your Songs!😝 "
+    })
+    console.log(err);
+    next();
+  })
+}
+
+
+const getAllSongsByPopularity = (req, res, next) => {
+  db.any('SELECT songs.id AS song_id, title, img_url, songs.user_id, genre_id, username, genre_name, COUNT(favorites.user_id) AS favorite_count, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM songs JOIN genres ON genres.id = songs.genre_id JOIN users ON songs.user_id = users.id JOIN comments ON comments.song_id = songs.id JOIN favorites ON favorites.song_id = songs.id GROUP BY songs.id, users.username, genres.genre_name ORDER BY favorite_count DESC')
   .then(songs => {
     res.status(200)
     res.json({
@@ -25,11 +44,13 @@ const getAllSongs = (req, res, next) => {
   })
 }
 
+
 // router.get('songs/genre/:genre_id', db.getAllSongsForSpecificGenre)
 const getAllSongsForSpecificGenre = (req, res, next) => {
   let genreId = parseInt(req.params.genre_id);
   db.any(
-    `SELECT songs.id AS song_id, title, img_url, user_id, genre_id, genre_name FROM songs JOIN genres ON songs.genre_id = genres.id JOIN users ON users.id = songs.user_id WHERE genres.id = $1 GROUP BY genres.id, users.id, songs.id`, [genreId]
+    // `SELECT songs.id AS song_id, title, img_url, songs.user_id, genre_id, genre_name, COUNT(favorites.user_id) AS favorite_count FROM songs JOIN genres ON songs.genre_id = genres.id JOIN users ON users.id = songs.user_id JOIN favorites ON favorites.song_id = songs.id WHERE genres.id = $1 GROUP BY genres.id, users.id, songs.id`, [genreId]
+    `SELECT songs.id AS song_id, title, img_url, songs.user_id, genre_id, username, genre_name, COUNT(favorites.user_id) AS favorite_count, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM songs JOIN genres ON genres.id = songs.genre_id JOIN users ON songs.user_id = users.id JOIN comments ON comments.song_id = songs.id JOIN favorites ON favorites.song_id = songs.id  WHERE genres.id = $1 GROUP BY songs.id, users.username, genres.genre_name ORDER BY favorite_count DESC`, [genreId]
   )
   .then(songs => {
     res.status(200).json({
@@ -53,7 +74,8 @@ const getAllSongsForSpecificGenre = (req, res, next) => {
 const getAllSongsPostedBySpecificUser = (req, res, next) => {
   let userId = parseInt(req.params.user_id);
   db.any(
-    `SELECT songs.id AS song_id, title, img_url, user_id, username, genre_id FROM songs JOIN genres ON songs.genre_id = genres.id JOIN users ON users.id = songs.user_id WHERE users.id = $1 GROUP BY genres.id, users.id, songs.id`, [userId]
+    // `SELECT songs.id AS song_id, title, img_url, user_id, username, genre_id FROM songs JOIN genres ON songs.genre_id = genres.id JOIN users ON users.id = songs.user_id WHERE users.id = $1 GROUP BY genres.id, users.id, songs.id`, [userId]
+    `SELECT songs.id AS song_id, title, img_url, songs.user_id, genre_id, username, genre_name, COUNT(favorites.user_id) AS favorite_count, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM songs JOIN genres ON genres.id = songs.genre_id JOIN users ON songs.user_id = users.id JOIN comments ON comments.song_id = songs.id JOIN favorites ON favorites.song_id = songs.id WHERE users.id = $1 GROUP BY songs.id, users.username, genres.genre_name ORDER BY songs.id DESC`, [userId]
   )
   .then(songs => {
     res.status(200).json({
@@ -73,28 +95,6 @@ const getAllSongsPostedBySpecificUser = (req, res, next) => {
   })
 }
 
-// router.get('SONGS/user/myProfile/1', db.getAllSongsPostedByMe);
-// const getAllSongsPostedByMe = (req, res, next) => {
-//   let userId = parseInt(req.params.user_id); //userId=1
-//   db.any(
-//     `SELECT songs.id AS song_id, title, img_url, user_id, username, genre_id FROM songs JOIN genres ON songs.genre_id = genres.id JOIN users ON users.id = songs.user_id WHERE user_id = 1 GROUP BY genres.id, users.id, songs.id`, [userId])
-//   .then(songs => {
-//     res.status(200).json({
-//       status: 'success',
-//       songs: songs,
-//       message: 'Songs by Genre Received!'
-//     })
-//   })
-//   .catch(err => {
-//     res.status(400)
-//     .json({
-//       status: 'error',
-//       message: " 🤣 Na nana na nah. You didn't get your Songs!😝 "
-//     })
-//     console.log(err);
-//     next();
-//   })
-// }
 
 const getOneSong = (req, res, next) => {
   let songId = parseInt(req.params.song_id);
@@ -165,9 +165,9 @@ const deleteSingleSong = (req, res, next) => {
 
 module.exports = {
   getAllSongs,
+  getAllSongsByPopularity,
   getAllSongsForSpecificGenre,
   getAllSongsPostedBySpecificUser,
-  // getAllSongsPostedByMe,
   getOneSong,
   postNewSong,
   deleteSingleSong

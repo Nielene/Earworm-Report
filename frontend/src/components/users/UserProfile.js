@@ -3,10 +3,32 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { fetchAllSongsPostedBySpecificUser } from '../../actions/songActions';
+import { fetchAllFavoritesBySpecificUser } from '../../actions/favoriteActions';
 import { fetchSingleUser } from '../../actions/userActions';
 
 
 class UserProfile extends Component {
+  state = {
+    backgroundColorPosted: 'blue',
+    backgroundColorFavorited: 'white',
+  }
+
+  handlePosted = e => {
+    this.props.fetchAllSongsPostedBySpecificUser(this.props.match.params.user_id);
+    this.setState({
+      backgroundColorPosted: 'blue',
+      backgroundColorFavorited: 'white',
+    })
+  }
+
+  handleFavorited = e => {
+    this.props.fetchAllFavoritesBySpecificUser(this.props.match.params.user_id)
+    this.setState({
+      backgroundColorFavorited: 'blue',
+      backgroundColorPosted: 'white',
+    })
+  }
+
   componentDidMount() {
     this.props.fetchAllSongsPostedBySpecificUser(this.props.match.params.user_id);
     this.props.fetchSingleUser(this.props.match.params.user_id);
@@ -22,41 +44,72 @@ class UserProfile extends Component {
 
     const songItems = this.props.all_songs_by_user.map(song => {
       return (
-      <div key={song.song_id}>
-        <div className=''>
-          <div className=''>
-            <Link to= '' style={{textDecoration: 'none' }} >
-              <img src={song.img_url} alt='' width='50' />
-            </Link>
-          </div>
+        <div key={song.song_id} className= 'eachSongListDiv'>
+          <div className='imageAndRestRow'>
 
-          <div className=''>
-            <Link to='' style={{ textDecoration: 'none' }} >
-              <h2>{song.title}</h2>
-            </Link>
-          </div>
+            <div className='imageColumn'>
+              <Link to='' style={{textDecoration: 'none'}} >
+                <img src={song.img_url} alt='' width='50' />
+              </Link>
+            </div>
 
-          <div className=''>
-            <Link to={'/profile/' + song.user_id} style={{ textDecoration: 'none' }} >
-              <h4>{song.username}</h4>
-            </Link>
-          </div>
+            <div className='titleEtcColumn'>
+              <div className='titleRow'>
+                <div className='songTitle'>
+                  <Link to='' style={{textDecoration: 'none'}} >
+                    <h2>{song.title} </h2>
+                  </Link>
+                </div>
 
-          <div className=''>
-            <h4>TOTAL NO OF FAVORITES</h4>
+                <div className='allButSongTitleRowForGenre'>
+                  <div className='userName'>
+                    <Link to={'/profile/' + song.user_id} style={{textDecoration: 'none'}} >
+                      <p>{song.username} </p>
+                    </Link>
+                  </div>
+                  <div className='genreName'>
+                    <Link to='' style={{textDecoration: 'none'}} >
+                      <p>{song.genre_name} </p>
+                    </Link>
+                  </div>
+
+                  <div className='favoriteCount'>
+                    <p>{song.favorite_count} Favorites</p>
+                  </div>
+
+                  <div className='favoriteButton'>
+                    <button> Favorite </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className='commentBody'>
+                {song.comment_body}
+              </div>
+
+              <div className='addNewComment'>
+                <div className='addNewCommentTextInput'>
+                  <input type='text' name='body' id={song.song_id} onChange={this.handleComment} ></input>
+                </div>
+                <div className='commentButton'>
+                  <button type='button' onClick={this.handleCommentSubmit} songid={song.song_id}>Add Comment </button>
+                </div>
+
+              </div>
+
+            </div>
+
           </div>
 
         </div>
-
-      </div>
     )
   })
 
     return (
 
         <div className='mainBodyDiv'>
-          <div className='mainBody userProfile'>
-            <div className='usernameTitle'>
+          <div className='mainBody userProfile mainBodyByProfile'>
+            <div className='pageTitle profileTitle usernameTitle'>
               <h1> {username} </h1>
             </div>
 
@@ -64,10 +117,10 @@ class UserProfile extends Component {
 
                 <div className='postedAndFavoritedButtonsDiv'>
                   <div className='leftPostedbutton'>
-                    <button type='button' >Posted</button>
+                    <button type='button' style={{backgroundColor: this.state.backgroundColorPosted}} onClick={this.handlePosted} >Posted</button>
                   </div>
                   <div className='rightFavoritedButton'>
-                    <button type='button' >Favorited</button>
+                    <button type='button' style={{backgroundColor: this.state.backgroundColorFavorited}} onClick={this.handleFavorited}>Favorited</button>
                   </div>
                 </div>
 
@@ -89,12 +142,14 @@ class UserProfile extends Component {
 const mapStateToProps = state => ({
   all_songs_by_user: state.songs.all_songs_by_user,
   single_user: state.users.single_user,
+  all_favorites_by_user: state.favorites.all_favorites_by_user,
 
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchAllSongsPostedBySpecificUser: id => dispatch(fetchAllSongsPostedBySpecificUser(id)),
+    fetchAllFavoritesBySpecificUser: id => dispatch(fetchAllFavoritesBySpecificUser(id)),
     fetchSingleUser: (id) => dispatch(fetchSingleUser(id)),
 
   };

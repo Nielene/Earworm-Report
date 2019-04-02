@@ -1,4 +1,4 @@
-import { FETCH_ALL_SONGS, FETCH_ALL_SONGS_POSTED_BY_SPECIFIC_USER, FETCH_ALL_SONGS_BY_GENRE } from './types';
+import { FETCH_ALL_SONGS, FETCH_ALL_SONGS_BY_POPULARITY, FETCH_ALL_SONGS_POSTED_BY_SPECIFIC_USER, FETCH_ALL_SONGS_BY_GENRE, ADD_COMMENT_FOR_SINGLE_SONG } from './types';
 import axios from 'axios';
 
 
@@ -9,6 +9,18 @@ export const fetchAllSongs = () => dispatch => {
     // debugger
     dispatch ({
       type: FETCH_ALL_SONGS,
+      payload: res.data.songs
+    })
+  })
+}
+
+export const fetchAllSongsByPopularity = () => dispatch => {
+  axios.get('/songs/byPopularity')
+  .then(res => {
+    // console.log(res.data);
+    // debugger
+    dispatch ({
+      type: FETCH_ALL_SONGS_BY_POPULARITY,
       payload: res.data.songs
     })
   })
@@ -34,6 +46,18 @@ export const fetchAllSongsPostedForSpecificGenre = (genre_id) => dispatch => {
     dispatch({
       type: FETCH_ALL_SONGS_BY_GENRE,
       payload: res.data.songs
+    })
+  })
+}
+
+export const postSingleSongComment = (song_id, addComment) => dispatch => {
+  axios.post(`/comments/${song_id}`, addComment)
+  .then(res => {
+    console.log(res);
+    debugger
+    dispatch({
+      type: ADD_COMMENT_FOR_SINGLE_SONG,
+      payload: res.data.add_single_song_comment
     })
   })
 }

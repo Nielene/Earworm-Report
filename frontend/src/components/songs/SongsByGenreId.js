@@ -25,7 +25,9 @@ class SongsByGenreId extends Component {
     e.preventDefault();
 
     // console.log('SELECTED GENRE', this.state.selectedGenre);
+    // console.log('FORM SUBMITTED', this.state.formSubmitted);
     this.props.fetchAllSongsPostedForSpecificGenre(this.state.selectedGenre)
+    // debugger
 
     this.setState({
       formSubmitted: true,
@@ -56,58 +58,107 @@ class SongsByGenreId extends Component {
 
     const songItems = songFilter.map(song => {
       return(
-      <div key={song.song_id}>
+        <div key={song.song_id} className= 'eachSongListDiv'>
+          <div className='imageAndRestRow'>
 
-        <Link to='' style={{textDecoration: 'none'}} >
-          <img src={song.img_url} alt='' width='50' />
-        </Link>
+            <div className='imageColumn'>
+              <Link to='' style={{textDecoration: 'none'}} >
+                <img src={song.img_url} alt='' width='50' />
+              </Link>
+            </div>
 
-        <Link to='' style={{textDecoration: 'none'}} >
-          <h2>{song.title} </h2>
-        </Link>
+            <div className='titleEtcColumn'>
+              <div className='titleRow'>
+                <div className='songTitle'>
+                  <Link to='' style={{textDecoration: 'none'}} >
+                    <h2>{song.title} </h2>
+                  </Link>
+                </div>
 
-        <Link to={'/profile/' + song.user_id} style={{textDecoration: 'none'}} >
-          <p>{song.username} </p>
-        </Link>
+                <div className='allButSongTitleRowForGenre'>
+                  <div className='userName'>
+                    <Link to={'/profile/' + song.user_id} style={{textDecoration: 'none'}} >
+                      <p>{song.username} </p>
+                    </Link>
+                  </div>
+                  <div className='genreName'>
+                    <Link to='' style={{textDecoration: 'none'}} >
+                      <p>{song.genre_name} </p>
+                    </Link>
+                  </div>
 
-        <Link to='' style={{textDecoration: 'none'}} >
-          <p>{song.genre_name} </p>
-        </Link>
+                  <div className='favoriteCount'>
+                    <p>{song.favorite_count} Favorites</p>
+                  </div>
 
-        <p>NUMBER OF FAVORITES</p>
+                  <div className='favoriteButton'>
+                    <button> Favorite </button>
+                  </div>
+                </div>
+              </div>
 
-        <button> Favorite </button>
+              <div className='commentBody'>
+                {song.comment_body}
+              </div>
 
-      </div>
+              <div className='addNewComment'>
+                <div className='addNewCommentTextInput'>
+                  <input type='text' name='body' id={song.song_id} onChange={this.handleComment} ></input>
+                </div>
+                <div className='commentButton'>
+                  <button type='button' onClick={this.handleCommentSubmit} songid={song.song_id}>Add Comment </button>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
     )
   })
+
+
+
+
+
 
   const genreItems = all_genres.map(genre => {
     return <option key={genre.genre_id} value={genre.genre_id}>{genre.genre_name}</option>
   })
 
     return (
-        <div className=''>
-          <h1> Songs By Genre </h1>
+      <div className='mainBodyDiv'>
+        <div className='mainBody userProfile mainBodyByGenre'>
 
-          <form onSubmit={this.handleSubmit} >
+          <div className='pageTitle genreTitle'>
+            <h1> Songs By Genre </h1>
+          </div>
+
+          <form className='form' onSubmit={this.handleSubmit} >
+            <div className='searchByTitleDiv'>
+              <div className='searchSongTextInput'>
 
 
-            <select onChange={this.handleSelect}  name='selectedGenre' >
-              <option key='0'value='' >All Genres</option>
-              {genreItems}
-            </select>
+                <select onChange={this.handleSelect}  name='selectedGenre' >
+                  <option key='0'value='' >All Genres</option>
+                  {genreItems}
+                </select>
+              </div>
 
-            <div className=''>
-              <button type='submit'>Search By Genre</button>
+              <div className='searchByTitleButton'>
+                <button type='submit'>Search By Genre</button>
+              </div>
             </div>
 
           </form>
 
-          <div>
+          <div className='songListDiv'>
             {songItems}
           </div>
         </div>
+      </div>
 
     )
   }

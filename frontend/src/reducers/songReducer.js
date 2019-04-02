@@ -1,9 +1,11 @@
-import { FETCH_ALL_SONGS, FETCH_ALL_SONGS_POSTED_BY_SPECIFIC_USER, FETCH_ALL_SONGS_BY_GENRE} from '../actions/types';
+import { FETCH_ALL_SONGS, FETCH_ALL_SONGS_BY_POPULARITY, FETCH_ALL_SONGS_POSTED_BY_SPECIFIC_USER, FETCH_ALL_SONGS_BY_GENRE, ADD_COMMENT_FOR_SINGLE_SONG} from '../actions/types';
 
 const initialState = {
   all_songs: [],
   all_songs_by_user: [],
   all_songs_by_genre: [],
+  all_songs_by_popularity: [],
+  add_single_song_comment: '',
 }
 
 export default function (state = initialState, action ) {
@@ -12,6 +14,11 @@ export default function (state = initialState, action ) {
       return {
         ...state,
         all_songs: action.payload
+      }
+    case FETCH_ALL_SONGS_BY_POPULARITY:
+      return {
+        ...state,
+        all_songs_by_popularity: action.payload
       }
     case FETCH_ALL_SONGS_POSTED_BY_SPECIFIC_USER:
       return {
@@ -22,6 +29,11 @@ export default function (state = initialState, action ) {
       return {
         ...state,
         all_songs_by_genre: action.payload
+      }
+    case ADD_COMMENT_FOR_SINGLE_SONG:
+      return {
+        ...state,
+        add_single_song_comment: action.payload
       }
     default:
       return state;
