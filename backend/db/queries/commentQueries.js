@@ -52,7 +52,7 @@ const postNewComment = (req, res, next) => {
   db.none("INSERT INTO comments(comment_body, user_id, song_id) VALUES(${comment_body}, ${user_id}, ${song_id})", {
     ...req.body,
     song_id: parseInt(req.params.song_id),
-    user_id: 1
+    // user_id: 1
   })
   .then(() => {
     res.status(200).json({

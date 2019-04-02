@@ -11,7 +11,9 @@ import { fetchSingleUser } from '../../actions/userActions';
 class MyUserProfile extends Component {
   state = {
     backgroundColorPosted: 'blue',
+    postedSelected: true,
     backgroundColorFavorited: 'white',
+    favoritedSelected: false,
   }
 
   handlePosted = e => {
@@ -21,7 +23,8 @@ class MyUserProfile extends Component {
     this.setState({
       backgroundColorPosted: 'blue',
       backgroundColorFavorited: 'white',
-
+      postedSelected: true,
+      favoritedSelected: false,
     })
   }
 
@@ -31,7 +34,8 @@ class MyUserProfile extends Component {
     this.setState({
       backgroundColorFavorited: 'blue',
       backgroundColorPosted: 'white',
-
+      postedSelected: false,
+      favoritedSelected: true,
     })
 
   }
@@ -50,9 +54,16 @@ class MyUserProfile extends Component {
     console.log('MyUserProfile props', this.props);
     // console.log('MyUserProfile', this.props.single_user.username);
 
+    let songArray = this.props.all_songs_by_user;
+    if (this.state.postedSelected) {
+      songArray = this.props.all_songs_by_user
+    } else if (this.state.favoritedSelected) {
+      songArray = this.props.all_favorites_by_user
+    }
+
     const username = this.props.single_user.username;
 
-    const songItems = this.props.all_songs_by_user.map(song => (
+    const songItems = songArray.map(song => (
       <div key={song.song_id} className= 'eachSongListDiv'>
         <div className='imageAndRestRow'>
 

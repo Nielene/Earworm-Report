@@ -50,14 +50,16 @@ export const fetchAllSongsPostedForSpecificGenre = (genre_id) => dispatch => {
   })
 }
 
-export const postSingleSongComment = (song_id, addComment) => dispatch => {
+export const postSingleSongComment = (user_id, song_id, addComment) => dispatch => {
   axios.post(`/comments/${song_id}`, addComment)
   .then(res => {
-    console.log(res);
+    console.log('POSTING COMMENT SUCCESS',res);
     debugger
     dispatch({
       type: ADD_COMMENT_FOR_SINGLE_SONG,
       payload: res.data.add_single_song_comment
     })
+  }).catch(err => {
+    console.log('FAILED TO POST COMMENT', err)
   })
 }

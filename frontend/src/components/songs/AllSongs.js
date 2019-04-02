@@ -71,10 +71,10 @@ class AllSongs extends Component {
 
 
   render () {
-    console.log(this.props);
-    console.log(this.state);
-    console.log(this.props.all_songs);
-    console.log(this.props.all_comments);
+    // console.log(this.props);
+    // console.log(this.state);
+    // console.log(this.props.all_songs);
+    // console.log(this.props.all_comments);
 
 
     const { searchedSong, formSubmitted } = this.state;

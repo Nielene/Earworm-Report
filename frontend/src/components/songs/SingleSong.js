@@ -18,7 +18,7 @@ class SingleSong extends Component {
       formSubmitted: false,
 
       body: '',
-      // userId: '',
+      add_single_song_comment: '',
       songId: '',
       commentSubmitted: false,
     }
@@ -33,12 +33,9 @@ class SingleSong extends Component {
 
   handleCommentSubmit = (e) => {
     e.preventDefault();
+    console.log('USERID, SONGID, COMMENTADDED',this.props.song.user_id, this.props.song.song_id, this.state.add_single_song_comment);
 
-    // if (this.state.body && this.state.commentSubmitted) {
-      // const addComment = {comment_body: this.state.body}
-      // const songId = {song_id: this.state.this.props.song.song_id}
-      // const userId = '1'
-      // this.props.postSingleSongComment(songId, addComment)
+    this.props.postSingleSongComment(this.props.song.user_id, this.props.song.song_id, this.state.add_single_song_comment)
 
       this.setState({
         body: '',
@@ -70,10 +67,10 @@ class SingleSong extends Component {
 
 
   render () {
-    console.log(this.props);
+    // console.log(this.props);
     console.log(this.state);
-    console.log(this.props.all_songs);
-    console.log(this.props.all_comments);
+    // console.log(this.props.all_songs);
+    // console.log(this.props.all_comments);
 
 
     const { searchedSong, formSubmitted } = this.state;
@@ -132,7 +129,7 @@ class SingleSong extends Component {
 
             <div className='addNewComment'>
               <div className='addNewCommentTextInput'>
-                <input type='text' name='body' id={this.props.song.song_id} onChange={this.handleComment} ></input>
+                <input type='text' name='add_single_song_comment' value= {this.state.add_single_song_comment} onChange={this.handleComment} ></input>
               </div>
               <div className='commentButton'>
                 <button type='button' onClick={this.handleCommentSubmit} songid={this.props.song.song_id}>Add Comment </button>
