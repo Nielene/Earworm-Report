@@ -36,7 +36,7 @@ class SingleSong extends Component {
 
     // if (this.state.body && this.state.commentSubmitted) {
       // const addComment = {comment_body: this.state.body}
-      // const songId = {song_id: this.state.song.song_id}
+      // const songId = {song_id: this.state.this.props.song.song_id}
       // const userId = '1'
       // this.props.postSingleSongComment(songId, addComment)
 
@@ -90,31 +90,14 @@ class SingleSong extends Component {
     }
 
 
-    // const commentItems = this.props.all_comments.map (comment => {
-    //   return (
-    //     <div key={comment.song_id}>
-    //       <li>{comment.song_id}</li>
-    //       <li>{comment.comment_body}</li>
-    //     </div>
-    //   )
-    // })
 
-
-
-
-    const songItems = songArray.map(song => {
-
-      if (song.user_id === 1) {
-        song.user_id = '';
-      }
-
-      return(
-        <div key={song.song_id} className= 'eachSongListDiv'>
+      return (
+        <div key={this.props.song.song_id} className= 'eachSongListDiv'>
           <div className='imageAndRestRow'>
 
             <div className='imageColumn'>
               <Link to='' style={{textDecoration: 'none'}} >
-                <img src={song.img_url} alt='' width='50' />
+                <img src={this.props.song.img_url} alt='' width='50' />
               </Link>
             </div>
 
@@ -122,19 +105,19 @@ class SingleSong extends Component {
               <div className='titleRow'>
                 <div className='songTitle'>
                   <Link to='' style={{textDecoration: 'none'}} >
-                    <h2>{song.title} </h2>
+                    <h2>{this.props.song.title} </h2>
                   </Link>
                 </div>
 
                 <div className='allButSongTitleRow'>
                   <div className='userName'>
-                    <Link to={'/profile/' + song.user_id} style={{textDecoration: 'none'}} >
-                      <p>{song.username} </p>
+                    <Link to={'/profile/' + this.props.song.user_id} style={{textDecoration: 'none'}} >
+                      <p>{this.props.song.username} </p>
                     </Link>
                   </div>
 
                   <div className='favoriteCount'>
-                    <p>{song.favorite_count} Favorites</p>
+                    <p>{this.props.song.favorite_count} Favorites</p>
                   </div>
 
                   <div className='favoriteButton'>
@@ -144,15 +127,15 @@ class SingleSong extends Component {
               </div>
 
             <div className='commentBody'>
-              {song.comment_body}
+              {this.props.song.comment_body}
             </div>
 
             <div className='addNewComment'>
               <div className='addNewCommentTextInput'>
-                <input type='text' name='body' id={song.song_id} onChange={this.handleComment} ></input>
+                <input type='text' name='body' id={this.props.song.song_id} onChange={this.handleComment} ></input>
               </div>
               <div className='commentButton'>
-                <button type='button' onClick={this.handleCommentSubmit} songid={song.song_id}>Add Comment </button>
+                <button type='button' onClick={this.handleCommentSubmit} songid={this.props.song.song_id}>Add Comment </button>
               </div>
 
             </div>
@@ -163,37 +146,8 @@ class SingleSong extends Component {
         </div>
 
       </div>
-    )
-  })
-
-    return (
-      <div className='mainBodyDiv'>
-        <div className='mainBody userProfile mainBodyByAllSongs'>
-
-          <div className='pageTitle allSongsTitle'>
-            <h1> All Songs </h1>
-          </div>
-
-          <form className='form' onSubmit={this.handleSubmit} >
-            <div className='searchByTitleDiv'>
-              <div className='searchSongTextInput'>
-              <input type='text' name='searchedSong' onChange={this.handleChange} ></input>
-            </div>
-            <div className='searchByTitleButton'>
-              <button type='submit'>Search By Title </button>
-            </div>
-            </div>
-          </form>
-
-          <div className = 'songListDiv'>
-            {songItems}
-          </div>
-
-        </div>
-      </div>
-
-    )
-  }
+      )
+    }
 }
 
 
