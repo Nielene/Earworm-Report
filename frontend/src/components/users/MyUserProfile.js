@@ -77,9 +77,7 @@ class MyUserProfile extends Component {
                   </Link>
                 </div>
                 <div className='genreName'>
-                  <Link to='' style={{textDecoration: 'none'}} >
-                    <p>{song.genre_name} </p>
-                  </Link>
+                  <p>{song.genre_name} </p>
                 </div>
 
                 <div className='favoriteCount'>

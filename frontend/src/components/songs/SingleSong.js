@@ -10,7 +10,7 @@ import { fetchAllCommentsForSingleSong } from '../../actions/commentActions';
 
 
 
-class AllSongs extends Component {
+class SingleSong extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -215,4 +215,4 @@ const mapDispatchToProps = dispatch => {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllSongs);
+export default connect(mapStateToProps, mapDispatchToProps)(SingleSong);

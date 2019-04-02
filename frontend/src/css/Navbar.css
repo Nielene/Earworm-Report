@@ -1,13 +1,37 @@
+body {
+  margin: 0px;
+}
+
 .navbar {
   /* background-color: red; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 1px solid black;
+  margin: 0px;
+  align-items: center;
+  font-family: cursive;
 
   /* must have: */
   height: 75px;
   width: 100%;
+}
+.navbar p {
+  height: 30px;
+  width: auto;
+  padding: 5px 5px 5px 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.navbar p:hover {
+  height: 30px;
+  width: auto;
+  padding: 5px 5px 5px 5px;
+  font-weight: bold;
+  border-radius: 25px;
+  /* background-color: rgba(245, 229, 27, 0.7); */
+  text-shadow: 4px 4px 2px rgba(139,69,19, 0.8);
+
 }
 
 .leftNavBar {
@@ -18,11 +42,12 @@
 }
 .leftNavBar p {
   font-weight: bold;
+  font-size: 22px;
 }
 
 .rightNavBar {
   display: flex;
-  width: 400px;
+  width: 500px;
   justify-content: flex-end;
   margin-right: 10px;
   justify-content: space-between;
