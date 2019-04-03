@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchAllSongsByPopularity } from '../../actions/songActions';
-// import { Link } from 'react-router-dom';
-// import '../../css/home/Home.css';
 import SingleSong from './SingleSong'
 
 
@@ -34,11 +32,11 @@ class SongsByPopularity extends Component {
 
 
   render () {
-    console.log(this.props);
-    // console.log(this.state);
+    // console.log(this.props); console.log(this.state);
 
     const { searchedSong, formSubmitted } = this.state;
     const { all_songs_by_popularity } = this.props;
+
     const filteredSongs = all_songs_by_popularity.filter( song => {
       return song.title.toLowerCase().includes(searchedSong.toLowerCase())
     })
@@ -51,16 +49,15 @@ class SongsByPopularity extends Component {
     }
 
     const songItems = songArray.map(song => {
-      // console.log('userprofile', song.user_id);
       if (song.user_id === 1) {
         song.user_id = '';
       }
-
-      return(
-        <SingleSong song={song} />
-
-    )
-  })
+      return (
+        <div key={song.song_id}>
+          <SingleSong song={song} />
+        </div>
+      )
+    })
 
     return (
       <div className='mainBodyDiv'>
@@ -95,7 +92,6 @@ class SongsByPopularity extends Component {
 
 
 const mapStateToProps = state => ({
-  // all_songs: state.songs.all_songs,
   all_songs_by_popularity: state.songs.all_songs_by_popularity
 })
 
