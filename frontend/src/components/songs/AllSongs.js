@@ -94,7 +94,6 @@ class AllSongs extends Component {
 
       return(
         < SingleSong song={song}/>
-
       )
     })
 
@@ -131,8 +130,8 @@ class AllSongs extends Component {
 
 const mapStateToProps = state => ({
   all_songs: state.songs.all_songs,
-  all_comments: state.comments.all_comments,
-  add_single_song_comment: state.songs.add_single_song_comment,
+  // all_comments: state.comments.all_comments,
+  // add_single_song_comment: state.songs.add_single_song_comment,
   single_song_comments: state.comments.single_song_comments,
 })
 

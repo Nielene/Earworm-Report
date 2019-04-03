@@ -60,36 +60,36 @@ class SingleSong extends Component {
   }
 
   componentDidMount() {
+    console.log('99999999999', this.props.song.song_id);
+    console.log('THIS.STATE SINGLE SONG',this.state);
     this.props.fetchAllSongs();
     // this.props.fetchAllComments();
-    this.props.fetchAllCommentsForSingleSong(this.state.song_id)
+    this.props.fetchAllCommentsForSingleSong(this.props.song.song_id)
   }
 
 
   render () {
     // console.log(this.props);
-    console.log(this.state);
+    // console.log(this.state);
     console.log(this.props.single_song_comments);
     console.log(this.props.all_songs);
-    console.log(this.props.all_comments);
+    // console.log(this.props.all_comments);
 
+    // const testComments = this.props.all_songs.map(song => {
+    //   return (
+    //     <div>
+    //         < SingleSongComments comment={song} />
     //
-    // const { searchedSong, formSubmitted } = this.state;
-    // const { all_songs } = this.props;
-    // const filteredSongs = all_songs.filter( song => {
-    //   return song.title.toLowerCase().includes(searchedSong.toLowerCase())
+    //     </div>
+    //   )
     // })
-    //
-    // let songArray = all_songs;
-    // if (!formSubmitted) {
-    //   songArray = all_songs
-    // } else if (formSubmitted) {
-    //   songArray = filteredSongs
-    // }
 
     const songComments = this.props.single_song_comments.map(comment => {
       return (
+        <div>
+          <p>comments</p>
         < SingleSongComments comment={comment} />
+      </div>
       )
     })
 
@@ -168,12 +168,15 @@ class SingleSong extends Component {
 }
 
 
-const mapStateToProps = state => ({
-  all_songs: state.songs.all_songs,
-  add_single_song_comment: state.songs.add_single_song_comment,
-  all_comments: state.comments.all_comments,
-  single_song_comments: state.comments.single_song_comments,
-})
+const mapStateToProps = state => {
+  console.log('STATETOPROPS. STATE',state);
+  return {
+   all_songs: state.songs.all_songs,
+   add_single_song_comment: state.songs.add_single_song_comment,
+   all_comments: state.comments.all_comments,
+   single_song_comments: state.comments.single_song_comments,
+ }
+}
 
 const mapDispatchToProps = dispatch => {
   return {

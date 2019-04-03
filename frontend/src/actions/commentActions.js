@@ -3,11 +3,12 @@ import axios from 'axios';
 
 
 export const fetchAllCommentsForSingleSong = (song_id) => dispatch => {
+  console.log('commentActions console log');
   axios.get(`/comments/${song_id}`)
   // axios.get(`/comments/`)
   .then(res => {
-    console.log(res.data);
-    debugger
+    // console.log(res.data);
+    // debugger
     dispatch ({
       type: FETCH_ALL_COMMENTS_FOR_SINGLE_SONG,
       payload: res.data.single_song_comments

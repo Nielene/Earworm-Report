@@ -20,19 +20,24 @@
 }
 
 .mainBodyByPopularity  {
-  background-image: url('http://clipart-library.com/images/qcBoEqGpi.jpg');
+  /* background-image: url('http://clipart-library.com/images/qcBoEqGpi.jpg'); */
+  background-image: url('../assets/free-music-art.jpg');
 }
 .mainBodyByGenre  {
-  background-image: url('http://clipart-library.com/images/rTnrpq7yc.jpg');
+  /* background-image: url('http://clipart-library.com/images/rTnrpq7yc.jpg'); */
+  background-image: url('../assets/music-brass.jpg');
 }
 .mainBodyByProfile  {
-  background-image: url('https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/music-in-my-soul-nikki-smith.jpg');
+  /* background-image: url('https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/music-in-my-soul-nikki-smith.jpg'); */
+  background-image: url('../assets/music-in-my-soul-nikki-smith.jpg');
 }
 .mainBodyByAllSongs  {
-  background-image: url('https://dumielauxepices.net/sites/default/files/drawn-guitar-rose-541530-8506093.jpg');
+  /* background-image: url('https://dumielauxepices.net/sites/default/files/drawn-guitar-rose-541530-8506093.jpg'); */
+  background-image: url('../assets/drawn-guitar-rose.jpg');
 }
 .mainBodyByHome  {
-  background-image: url('http://cdn-images.audioaddict.com/8/2/a/6/f/f/82a6ff5269d4a1d2cb0fef58a652e761.png');
+  /* background-image: url('http://cdn-images.audioaddict.com/8/2/a/6/f/f/82a6ff5269d4a1d2cb0fef58a652e761.png'); */
+  background-image: url('../assets/guitar-star-brown.png');
   height: 100vh;
 }
 
