@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 // import '../../css/home/Home.css';
 
 import { fetchAllSongs } from '../../actions/songActions';
@@ -59,8 +59,8 @@ class AllSongs extends Component {
 
   componentDidMount() {
     this.props.fetchAllSongs();
-    this.props.fetchAllComments();
-    // this.props.fetchAllCommentsForSingleSong(this.state.song_id)
+    // this.props.fetchAllComments();
+    this.props.fetchAllCommentsForSingleSong(this.state.song_id)
   }
 
 
@@ -95,9 +95,8 @@ class AllSongs extends Component {
       return(
         < SingleSong song={song}/>
 
-
-    )
-  })
+      )
+    })
 
     return (
       <div className='mainBodyDiv'>

@@ -69,9 +69,8 @@ class SingleSong extends Component {
   render () {
     // console.log(this.props);
     console.log(this.state);
-    console.log(this.props.single_song_comments);
-    console.log(this.props.all_songs);
-    console.log(this.props.all_comments);
+    // console.log(this.props.all_songs);
+    // console.log(this.props.all_comments);
 
     //
     // const { searchedSong, formSubmitted } = this.state;
@@ -87,71 +86,20 @@ class SingleSong extends Component {
     //   songArray = filteredSongs
     // }
 
-    const songComments = this.props.single_song_comments.map(comment => {
+    // const songComments = this.props.single_song_comments.map(comment => {
+    //   return (
+    //     < SingleSongComments comment={comment} />
+    //   )
+    // })
+    //
+
       return (
-        < SingleSongComments comment={comment} />
-      )
-    })
+        <div key={this.props.comment.comment_id} className= 'eachSongListDiv'>
+          
 
-
-      return (
-        <div key={this.props.song.song_id} className= 'eachSongListDiv'>
-          <div className='imageAndRestRow'>
-
-            <div className='imageColumn'>
-              <Link to='' style={{textDecoration: 'none'}} >
-                <img src={this.props.song.img_url} alt='' width='50' />
-              </Link>
-            </div>
-
-            <div className='titleEtcColumn'>
-              <div className='titleRow'>
-                <div className='songTitle'>
-                  <Link to='' style={{textDecoration: 'none'}} >
-                    <h2>{this.props.song.title} </h2>
-                  </Link>
-                </div>
-
-                <div className='allButSongTitleRow allButSongTitleRowForGenre'>
-                  <div className='userName'>
-                    <Link to={'/profile/' + this.props.song.user_id} style={{textDecoration: 'none'}} >
-                      <p>{this.props.song.username} </p>
-                    </Link>
+                  <div className='comments'>
+                      <p>{this.props.comment.comment_body} </p>
                   </div>
-
-                  <div className='genreName'>
-                    <p>{this.props.song.genre_name} </p>
-                  </div>
-
-                  <div className='favoriteCount'>
-                    <p>{this.props.song.favorite_count} Favorites</p>
-                  </div>
-
-                  <div className='favoriteButton'>
-                    <button> Favorite </button>
-                  </div>
-                </div>
-              </div>
-
-            <div className='commentBody'>
-              {/* // {this.props.song.comment_body}  */}
-              {songComments}
-            </div>
-
-            <div className='addNewComment'>
-              <div className='addNewCommentTextInput'>
-                <input type='text' name='add_single_song_comment' value= {this.state.add_single_song_comment} onChange={this.handleComment} ></input>
-              </div>
-              <div className='commentButton'>
-                <button type='button' onClick={this.handleCommentSubmit} songid={this.props.song.song_id}>Add Comment </button>
-              </div>
-
-            </div>
-
-
-          </div>
-
-        </div>
 
       </div>
       )
@@ -170,16 +118,16 @@ class SingleSong extends Component {
 
 const mapStateToProps = state => ({
   all_songs: state.songs.all_songs,
-  add_single_song_comment: state.songs.add_single_song_comment,
   all_comments: state.comments.all_comments,
+  add_single_song_comment: state.songs.add_single_song_comment,
   single_song_comments: state.comments.single_song_comments,
 })
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchAllSongs: () => dispatch(fetchAllSongs()),
-    postSingleSongComment: (user_id, song_id, addComment) => dispatch(postSingleSongComment(user_id, song_id, addComment)),
     fetchAllComments: () => dispatch(fetchAllComments()),
+    postSingleSongComment: (user_id, song_id, addComment) => dispatch(postSingleSongComment(user_id, song_id, addComment)),
     fetchAllCommentsForSingleSong: (song_id) => dispatch(fetchAllCommentsForSingleSong(song_id)),
   }
 }

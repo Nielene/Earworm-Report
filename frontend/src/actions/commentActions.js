@@ -6,11 +6,11 @@ export const fetchAllCommentsForSingleSong = (song_id) => dispatch => {
   axios.get(`/comments/${song_id}`)
   // axios.get(`/comments/`)
   .then(res => {
-    // console.log(res.data);
-    // debugger
+    console.log(res.data);
+    debugger
     dispatch ({
       type: FETCH_ALL_COMMENTS_FOR_SINGLE_SONG,
-      payload: res.data.songs
+      payload: res.data.single_song_comments
     })
   })
 }
@@ -23,7 +23,7 @@ export const fetchAllComments = () => dispatch => {
     // debugger
     dispatch ({
       type: FETCH_ALL_COMMENTS,
-      payload: res.data.comments
+      payload: res.data.all_comments
     })
   })
 }

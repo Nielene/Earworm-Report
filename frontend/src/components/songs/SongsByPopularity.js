@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchAllSongsByPopularity } from '../../actions/songActions';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 // import '../../css/home/Home.css';
 import SingleSong from './SingleSong'
 
@@ -58,61 +58,6 @@ class SongsByPopularity extends Component {
 
       return(
         <SingleSong song={song} />
-
-        //   <div key={song.song_id} className= 'eachSongListDiv'>
-        //     <div className='imageAndRestRow'>
-        //
-        //       <div className='imageColumn'>
-        //         <Link to='' style={{textDecoration: 'none'}} >
-        //           <img src={song.img_url} alt='' width='50' />
-        //         </Link>
-        //       </div>
-        //
-        //       <div className='titleEtcColumn'>
-        //         <div className='titleRow'>
-        //           <div className='songTitle'>
-        //             <Link to='' style={{textDecoration: 'none'}} >
-        //               <h2>{song.title} </h2>
-        //             </Link>
-        //           </div>
-        //
-        //           <div className='allButSongTitleRow'>
-        //             <div className='userName'>
-        //               <Link to={'/profile/' + song.user_id} style={{textDecoration: 'none'}} >
-        //                 <p>{song.username} </p>
-        //               </Link>
-        //             </div>
-        //
-        //             <div className='favoriteCount'>
-        //               <p>{song.favorite_count} Favorites</p>
-        //             </div>
-        //
-        //             <div className='favoriteButton'>
-        //               <button> Favorite </button>
-        //             </div>
-        //           </div>
-        //         </div>
-        //
-        //       <div className='commentBody'>
-        //         {song.comment_body}
-        //       </div>
-        //
-        //       <div className='addNewComment'>
-        //         <div className='addNewCommentTextInput'>
-        //           <input type='text' name='body' id={song.song_id} onChange={this.handleComment} ></input>
-        //         </div>
-        //         <div className='commentButton'>
-        //           <button type='button' onClick={this.handleCommentSubmit} songid={song.song_id}>Add Comment </button>
-        //         </div>
-        //
-        //       </div>
-        //
-        //
-        //     </div>
-        //
-        //   </div>
-        //
-        // </div>
 
     )
   })
