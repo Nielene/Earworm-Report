@@ -64,10 +64,7 @@ class MyUserProfile extends Component {
     const username = this.props.single_user.username;
 
     const songItems = songArray.map(song => (
-
       < SingleSong song = {song} />
-
-
     ))
 
     return (
@@ -93,12 +90,20 @@ class MyUserProfile extends Component {
             <div className='addNewSongDiv'>
               <p>Add New Song </p>
               <div className='addNewSong'>
-                <div className='addNewSongTextInput'>
-                  <input type='text' />
+
+                <div className='addNewSongTitleAndImage'>
+                  <div className='addNewSongTitleInput'>
+                    <input type='text' placeholder='New Song Title' />
+                  </div>
+                  <div className='addNewSongImageInput'>
+                    <input type='text' placeholder='Image URL' />
+                  </div>
                 </div>
+
                 <div className='addNewSongSubmitButton'>
                   <button type='submit' > Submit</button>
                 </div>
+
               </div>
             </div>
 

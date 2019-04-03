@@ -62,11 +62,9 @@ class UserProfile extends Component {
 
     const songItems = songArray.map(song => {
       return (
-
         < SingleSong song={song} />
-
-    )
-  })
+      )
+    })
 
     return (
 

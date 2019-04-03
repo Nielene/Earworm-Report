@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { fetchAllCommentsForSingleSong } from '../../actions/commentActions';
-import SingleSongComments from './SingleSongComments'
-
+// import SingleSongComments from './SingleSongComments'
 
 class SingleSong extends Component {
 
@@ -16,14 +15,10 @@ class SingleSong extends Component {
     console.log('SINGLE SONG COMMENTS', this.props.single_song_comments);
     console.log('song id', this.props.song.song_id);
 
-
-    const testComments = this.props.single_song_comments.map(comment => {
-      return (
-        <div key={comment.comment_id}>
-          < SingleSongComments comment={comment} />
-      </div>
-      )
-    })
+    // Keep for Records:
+    // const testComments = this.props.single_song_comments.map(comment => {
+    //   return (  <div key={comment.comment_id}>  < SingleSongComments comment={comment} />  </div> )
+    // })
 
     const songComments = this.props.song.comment_body.map( comment => {
       return (

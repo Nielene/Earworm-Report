@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   height: auto;
+  background-color: rgba(247, 202, 24, 0.7);
 }
 
 .mainBody {
@@ -136,13 +137,25 @@
   /* margin-top: 30px; */
   border-radius: 5px;
 }
-.addNewSongTextInput input {
+.addNewSongTitleInput input {
+  width: 175px;
+  height: 20px;
+  border-radius: 5px;
+  border-style: inset;
+  margin-bottom: 10px;
+}
+.addNewSongImageInput input {
   width: 175px;
   height: 20px;
   border-radius: 5px;
   border-style: inset;
 }
 
+.addNewSongSubmitButton {
+  display: flex;
+  /* background-color: red; */
+  align-items: center;
+}
 .addNewSongSubmitButton button {
   width: 120px;
   height: 25px;
