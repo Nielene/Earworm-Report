@@ -60,15 +60,9 @@ class SongsByGenreId extends Component {
 
     const songItems = songFilter.map(song => {
       return(
-
         <SingleSong song={song} />
-
-    )
-  })
-
-
-
-
+      )
+    })
 
 
   const genreItems = all_genres.map(genre => {
@@ -115,7 +109,7 @@ class SongsByGenreId extends Component {
 const mapStateToProps = state => ({
   all_songs: state.songs.all_songs,
   all_songs_by_genre: state.songs.all_songs_by_genre,
-  all_genres: state.genres.all_genres
+  all_genres: state.genres.all_genres,
 })
 
 const mapDispatchToProps = dispatch => {

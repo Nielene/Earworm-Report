@@ -7,6 +7,10 @@ import { fetchAllFavoritesBySpecificUser } from '../../actions/favoriteActions';
 import { fetchSingleUser } from '../../actions/userActions';
 import SingleSong from '../songs/SingleSong'
 
+import { postNewSong } from '../../actions/songActions'//our action;
+import { fetchAllGenres } from '../../actions/genreActions';
+import { withRouter } from "react-router";
+
 
 class MyUserProfile extends Component {
   state = {
@@ -14,8 +18,18 @@ class MyUserProfile extends Component {
     postedSelected: true,
     backgroundColorFavorited: 'white',
     favoritedSelected: false,
+
+    title: '',
+    img_url: '',
+    user_id: 1,
+    genre_id: '',
+
+    // selectedGenre: '',
+
   }
 
+
+  // POSTED AND FAVORITED BUTTONS:
   handlePosted = e => {
     const user_id = 1;
     this.props.fetchAllSongsPostedBySpecificUser(user_id);
@@ -37,14 +51,42 @@ class MyUserProfile extends Component {
       postedSelected: false,
       favoritedSelected: true,
     })
-
   }
+
+
+  //POST NEW SONG:
+  onChange = (e) => {
+  this.setState({ [e.target.name]: e.target.value });
+  }
+
+
+  submitNewSong = (e) => {
+    e.preventDefault();
+
+    const songData = {
+      title: this.state.title,
+      img_url: this.state.img_url,
+      user_id: this.state.user_id,
+      genre_id: this.state.genre_id,
+    }
+
+    this.props.postNewSong(songData)
+    this.props.fetchAllSongsPostedBySpecificUser(this.state.user_id);
+    console.log('THIS.STATE USER PROFILE', this.state);
+    // reference:
+    // (function() {
+    //   alert( `Your song has beed added. ` )
+    // })()
+  }
+
+
 
 
   componentDidMount() {
     const user_id = 1;
     this.props.fetchAllSongsPostedBySpecificUser(user_id);
     this.props.fetchSingleUser(user_id);
+    this.props.fetchAllGenres();
 
     // console.log(this.props, 'hello');
     // debugger
@@ -67,6 +109,10 @@ class MyUserProfile extends Component {
       < SingleSong song = {song} />
     ))
 
+    const genreItems = this.props.all_genres.map(genre => {
+      return <option key={genre.genre_id} value={genre.genre_id} >{genre.genre_name} </option>
+    })
+
     return (
 
       <div className='mainBodyDiv'>
@@ -76,7 +122,7 @@ class MyUserProfile extends Component {
             <h1> {username}</h1>
           </div>
 
-          <form className='form'>
+          <form className='form' onSubmit={this.submitNewSong}>
 
             <div className='postedAndFavoritedButtonsDiv'>
               <div className='leftPostedbutton'>
@@ -93,10 +139,16 @@ class MyUserProfile extends Component {
 
                 <div className='addNewSongTitleAndImage'>
                   <div className='addNewSongTitleInput'>
-                    <input type='text' placeholder='New Song Title' />
+                    <input type='text' name='title' onChange={this.onChange} value={this.state.title}  placeholder='New Song Title' />
                   </div>
                   <div className='addNewSongImageInput'>
-                    <input type='text' placeholder='Image URL' />
+                    <input type='text' name='img_url' onChange={this.onChange} value={this.state.img_url} placeholder='Image URL' />
+                  </div>
+                  <div className=''>
+                    <select onChange={this.onChange}  name='genre_id' >
+                      <option key='0' value='' >All Genres</option>
+                      {genreItems}
+                    </select>
                   </div>
                 </div>
 
@@ -126,6 +178,8 @@ const mapStateToProps = state => ({
   all_songs_by_user: state.songs.all_songs_by_user,
   single_user: state.users.single_user,
   all_favorites_by_user: state.favorites.all_favorites_by_user,
+  post_new_song: state.songs.post_new_song,
+  all_genres: state.genres.all_genres,
 
 });
 
@@ -134,7 +188,10 @@ const mapDispatchToProps = dispatch => {
     fetchAllSongsPostedBySpecificUser: (id) => dispatch(fetchAllSongsPostedBySpecificUser(id)),
     fetchAllFavoritesBySpecificUser: id => dispatch(fetchAllFavoritesBySpecificUser(id)),
     fetchSingleUser: (id) => dispatch(fetchSingleUser(id)),
+    postNewSong: (songData) => dispatch(postNewSong(songData)),
+    fetchAllGenres: () => dispatch(fetchAllGenres()),
+
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps )(MyUserProfile);
+export default connect(mapStateToProps, mapDispatchToProps )(withRouter(MyUserProfile));

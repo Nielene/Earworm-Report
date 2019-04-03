@@ -8,6 +8,6 @@ router.get('/song/:song_id', db.getAllFavoritesForSpecificSong)
 router.get('/user/:user_id', db.getAllFavoritesForSpecificUser);
 
 router.post('/user/:song_id', db.postNewFavorite);    //??
-router.delete('/user/:song_id', db.deleteSingleFavorite);
+router.delete('/user/:favorite_id', db.deleteSingleFavorite);
 
 module.exports = router;

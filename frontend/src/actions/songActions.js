@@ -1,4 +1,4 @@
-import { FETCH_ALL_SONGS, FETCH_ALL_SONGS_BY_POPULARITY, FETCH_ALL_SONGS_POSTED_BY_SPECIFIC_USER, FETCH_ALL_SONGS_BY_GENRE, ADD_COMMENT_FOR_SINGLE_SONG } from './types';
+import { FETCH_ALL_SONGS, FETCH_ALL_SONGS_BY_POPULARITY, FETCH_ALL_SONGS_POSTED_BY_SPECIFIC_USER, FETCH_ALL_SONGS_BY_GENRE, POST_NEW_SONG, ADD_COMMENT_FOR_SINGLE_SONG } from './types';
 import axios from 'axios';
 
 
@@ -46,6 +46,28 @@ export const fetchAllSongsPostedForSpecificGenre = (genre_id) => dispatch => {
     dispatch({
       type: FETCH_ALL_SONGS_BY_GENRE,
       payload: res.data.songs
+    })
+  })
+}
+//
+// export const createPost = (postData) => dispatch => {
+//   axios.post('/posts',  postData)
+//   .then(post => {
+//     dispatch ({
+//       type: NEW_POST,
+//       payload: post.data.body
+//     })
+//   })
+// }
+
+export const postNewSong = (songData) => dispatch => {
+  axios.post('/songs', songData)
+  .then (song => {
+    console.log('POSTING NEW SONG', song);
+    debugger
+    dispatch ({
+      type: POST_NEW_SONG,
+      payload: song.data.body
     })
   })
 }
