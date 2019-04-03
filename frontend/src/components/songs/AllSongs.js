@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
-// import '../../css/home/Home.css';
 
 import { fetchAllSongs } from '../../actions/songActions';
 import { fetchAllComments } from '../../actions/commentActions';
@@ -19,7 +17,6 @@ class AllSongs extends Component {
       formSubmitted: false,
 
       body: '',
-      // userId: '',
       songId: '',
       commentSubmitted: false,
     }
@@ -59,7 +56,6 @@ class AllSongs extends Component {
 
   componentDidMount() {
     this.props.fetchAllSongs();
-    // this.props.fetchAllComments();
     this.props.fetchAllCommentsForSingleSong(this.state.song_id)
   }
 
@@ -130,7 +126,6 @@ class AllSongs extends Component {
 
 const mapStateToProps = state => ({
   all_songs: state.songs.all_songs,
-  // all_comments: state.comments.all_comments,
   // add_single_song_comment: state.songs.add_single_song_comment,
   single_song_comments: state.comments.single_song_comments,
 })

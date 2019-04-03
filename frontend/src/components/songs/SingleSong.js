@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 // import '../../css/home/Home.css';
 
-import { fetchAllSongs } from '../../actions/songActions';
-import { fetchAllComments } from '../../actions/commentActions';
-import { postSingleSongComment } from '../../actions/songActions';
+// import { fetchAllSongs } from '../../actions/songActions';
+// import { fetchAllComments } from '../../actions/commentActions';
+// import { postSingleSongComment } from '../../actions/songActions';
 import { fetchAllCommentsForSingleSong } from '../../actions/commentActions';
 import SingleSongComments from './SingleSongComments'
 
@@ -14,55 +14,53 @@ class SingleSong extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      searchedSong: '',
-      formSubmitted: false,
-
-      body: '',
-      add_single_song_comment: '',
-      songId: '',
-      commentSubmitted: false,
+      // searchedSong: '',
+      // formSubmitted: false,
+      //
+      // body: '',
+      // add_single_song_comment: '',
+      // songId: '',
+      // commentSubmitted: false,
     }
 
   }
 
-  handleComment = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    })
-  }
+  // handleComment = (e) => {
+  //   this.setState({
+  //     [e.target.name]: e.target.value,
+  //   })
+  // }
 
-  handleCommentSubmit = (e) => {
-    e.preventDefault();
-    console.log('USERID, SONGID, COMMENTADDED',this.props.song.user_id, this.props.song.song_id, this.state.add_single_song_comment);
-
-    this.props.postSingleSongComment(this.props.song.user_id, this.props.song.song_id, this.state.add_single_song_comment)
-
-      this.setState({
-        body: '',
-        commentSubmitted: true,
-      })
-
-  }
+  // handleCommentSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log('USERID, SONGID, COMMENTADDED',this.props.song.user_id, this.props.song.song_id, this.state.add_single_song_comment);
+  //
+  //   this.props.postSingleSongComment(this.props.song.user_id, this.props.song.song_id, this.state.add_single_song_comment)
+  //   this.setState({
+  //     body: '',
+  //     commentSubmitted: true,
+  //   })
+  // }
 
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-      formSubmitted: false,
-    })
-  }
+  // handleChange = (e) => {
+  //   this.setState({
+  //     [e.target.name]: e.target.value,
+  //     formSubmitted: false,
+  //   })
+  // }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.setState({
-      formSubmitted: true,
-    })
-  }
+  // handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   this.setState({
+  //     formSubmitted: true,
+  //   })
+  // }
 
   componentDidMount() {
-    console.log('99999999999', this.props.song.song_id);
-    console.log('THIS.STATE SINGLE SONG',this.state);
-    this.props.fetchAllSongs();
+    // console.log('99999999999', this.props.song.song_id);
+    // console.log('THIS.STATE SINGLE SONG',this.state);
+    // this.props.fetchAllSongs();
     // this.props.fetchAllComments();
     this.props.fetchAllCommentsForSingleSong(this.props.song.song_id)
   }
@@ -72,17 +70,9 @@ class SingleSong extends Component {
     // console.log(this.props);
     // console.log(this.state);
     console.log(this.props.single_song_comments);
-    console.log(this.props.all_songs);
+    // console.log(this.props.all_songs);
     // console.log(this.props.all_comments);
 
-    // const testComments = this.props.all_songs.map(song => {
-    //   return (
-    //     <div>
-    //         < SingleSongComments comment={song} />
-    //
-    //     </div>
-    //   )
-    // })
 
     const songComments = this.props.single_song_comments.map(comment => {
       return (
@@ -171,18 +161,18 @@ class SingleSong extends Component {
 const mapStateToProps = state => {
   console.log('STATETOPROPS. STATE',state);
   return {
-   all_songs: state.songs.all_songs,
-   add_single_song_comment: state.songs.add_single_song_comment,
-   all_comments: state.comments.all_comments,
+   // all_songs: state.songs.all_songs,
+   // add_single_song_comment: state.songs.add_single_song_comment,
+   // all_comments: state.comments.all_comments,
    single_song_comments: state.comments.single_song_comments,
  }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchAllSongs: () => dispatch(fetchAllSongs()),
-    postSingleSongComment: (user_id, song_id, addComment) => dispatch(postSingleSongComment(user_id, song_id, addComment)),
-    fetchAllComments: () => dispatch(fetchAllComments()),
+    // fetchAllSongs: () => dispatch(fetchAllSongs()),
+    // postSingleSongComment: (user_id, song_id, addComment) => dispatch(postSingleSongComment(user_id, song_id, addComment)),
+    // fetchAllComments: () => dispatch(fetchAllComments()),
     fetchAllCommentsForSingleSong: (song_id) => dispatch(fetchAllCommentsForSingleSong(song_id)),
   }
 }
