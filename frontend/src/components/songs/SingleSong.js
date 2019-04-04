@@ -2,31 +2,74 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { fetchAllCommentsForSingleSong } from '../../actions/commentActions';
+import { fetchAllCommentsForSingleSong, postSingleSongComment } from '../../actions/commentActions';
 // import SingleSongComments from './SingleSongComments'
 
+
+
 class SingleSong extends Component {
+  state = {
+    comment: '',
+    user_id: 1,
+    song_id: this.props.song.song_id,
+  }
+
+  handleCommentChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+    console.log(this.state);
+  }
+
+  handleCommentSubmit = e => {
+    e.preventDefault();
+
+    const commentData = {
+      // song_id: this.props.song.song_id,
+      // song_id: this.state.song_id,
+      user_id: this.state.user_id,
+      comment_body: this.state.comment,
+    }
+
+    this.props.postSingleSongComment(this.state.song_id, commentData)
+    console.log('THIS.STATE SINGLE SONG COMMENT', this.state);
+    // this.props.fetchAllCommentsForSingleSong(this.props.song.song_id)
+
+  }
+
 
   componentDidMount() {
     this.props.fetchAllCommentsForSingleSong(this.props.song.song_id)
   }
 
+
+  displayComments = () => {
+    const { song_comments } = this.props
+
+    if (song_comments) {
+      const comments =  song_comments.map( comment => {
+        return <div> {comment.comment_body} </div>
+      })
+      return comments
+    } else {
+      return <h3> Loading...</h3>
+    }
+  }
+
+
+
+
+
+
+
   render () {
-    console.log('SINGLE SONG COMMENTS', this.props.single_song_comments);
-    console.log('song id', this.props.song.song_id);
+    // console.log('SINGLE SONG COMMENTS', this.props.single_song_comments);
+    // console.log('song id', this.props.song.song_id);
+    console.log(this.state);
 
     // Keep for Records:
     // const testComments = this.props.single_song_comments.map(comment => {
     //   return (  <div key={comment.comment_id}>  < SingleSongComments comment={comment} />  </div> )
     // })
 
-    const songComments = this.props.song.comment_body.map( comment => {
-      return (
-        <div>
-          {comment}
-        </div>
-      )
-    })
 
 
   return (
@@ -70,15 +113,16 @@ class SingleSong extends Component {
 
           <div className='commentBody'>
             {/*{this.props.song.comment_body} */}
-            {songComments}
+            {/*{songComments}*/}
+            {this.displayComments()}
           </div>
 
           <div className='addNewComment'>
             <div className='addNewCommentTextInput'>
-              <input type='text' name='add_single_song_comment' value= {this.add_single_song_comment} onChange={this.handleComment} ></input>
+              <input type='text' onChange={this.handleCommentChange} name='comment' value= {this.state.comment} placeholder='your comment...' ></input>
             </div>
             <div className='commentButton'>
-              <button type='button' onClick={this.handleCommentSubmit} songid={this.props.song.song_id}>Add Comment </button>
+              <button type='button' onClick={this.handleCommentSubmit} > Add Comment </button>
             </div>
 
           </div>
@@ -94,16 +138,20 @@ class SingleSong extends Component {
 }
 
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   console.log('STATETOPROPS. STATE',state);
   return {
-    single_song_comments: state.comments.single_song_comments,
+
+    single_song_comments: state.comments.songs_to_comments_map[ownProps.song.song_id],
+    song_comments: state.comments.songs_to_comments_map[ownProps.song.song_id],
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchAllCommentsForSingleSong: (song_id) => dispatch(fetchAllCommentsForSingleSong(song_id)),
+    postSingleSongComment: (song_id, commentData) => dispatch(postSingleSongComment(song_id, commentData)),
+
   }
 }
 

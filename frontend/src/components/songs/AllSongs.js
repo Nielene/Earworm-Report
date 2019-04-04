@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchAllSongs } from '../../actions/songActions';
-import { fetchAllComments } from '../../actions/commentActions';
-import { postSingleSongComment } from '../../actions/songActions';
+// import { postSingleSongComment } from '../../actions/songActions';
 import { fetchAllCommentsForSingleSong } from '../../actions/commentActions';
 import SingleSong from './SingleSong'
 
@@ -125,16 +124,15 @@ class AllSongs extends Component {
 
 const mapStateToProps = state => ({
   all_songs: state.songs.all_songs,
-  // add_single_song_comment: state.songs.add_single_song_comment,
   single_song_comments: state.comments.single_song_comments,
+  // add_single_song_comment: state.songs.add_single_song_comment,
 })
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchAllSongs: () => dispatch(fetchAllSongs()),
-    fetchAllComments: () => dispatch(fetchAllComments()),
-    postSingleSongComment: (user_id, song_id, addComment) => dispatch(postSingleSongComment(user_id, song_id, addComment)),
     fetchAllCommentsForSingleSong: (song_id) => dispatch(fetchAllCommentsForSingleSong(song_id)),
+    // postSingleSongComment: (user_id, song_id, addComment) => dispatch(postSingleSongComment(user_id, song_id, addComment)),
   }
 }
 

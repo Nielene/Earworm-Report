@@ -6,7 +6,6 @@ const initialState = {
   all_songs_by_genre: [],
   all_songs_by_popularity: [],
   post_new_song: {},
-  add_single_song_comment: '',
 }
 
 export default function (state = initialState, action ) {
@@ -36,11 +35,7 @@ export default function (state = initialState, action ) {
         ...state,
         post_new_song: action.payload
       }
-    case ADD_COMMENT_FOR_SINGLE_SONG:
-      return {
-        ...state,
-        add_single_song_comment: action.payload
-      }
+
     default:
       return state;
   }

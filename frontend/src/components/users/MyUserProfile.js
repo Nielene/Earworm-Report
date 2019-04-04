@@ -71,6 +71,7 @@ class MyUserProfile extends Component {
     }
 
     this.props.postNewSong(songData)
+
     this.props.fetchAllSongsPostedBySpecificUser(this.state.user_id);
     console.log('THIS.STATE USER PROFILE', this.state);
     // reference:

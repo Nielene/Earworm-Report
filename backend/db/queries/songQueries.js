@@ -25,7 +25,7 @@ const getAllSongs = (req, res, next) => {
 
 
 const getAllSongsByPopularity = (req, res, next) => {
-  db.any('SELECT songs.id AS song_id, title, img_url, songs.user_id, genre_id, username, genre_name, COUNT(favorites.user_id) AS favorite_count, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM songs JOIN genres ON genres.id = songs.genre_id JOIN users ON songs.user_id = users.id JOIN comments ON comments.song_id = songs.id JOIN favorites ON favorites.song_id = songs.id GROUP BY songs.id, users.username, genres.genre_name ORDER BY favorite_count DESC')
+  db.any('SELECT songs.id AS song_id, title, img_url, songs.user_id, genre_id, username, genre_name, COUNT(favorites.user_id) AS favorite_count, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM songs LEFT JOIN genres ON genres.id = songs.genre_id LEFT JOIN users ON songs.user_id = users.id LEFT JOIN comments ON comments.song_id = songs.id LEFT JOIN favorites ON favorites.song_id = songs.id GROUP BY songs.id, users.username, genres.genre_name ORDER BY favorite_count DESC')
   .then(songs => {
     res.status(200)
     res.json({
@@ -49,7 +49,7 @@ const getAllSongsByPopularity = (req, res, next) => {
 const getAllSongsForSpecificGenre = (req, res, next) => {
   let genreId = parseInt(req.params.genre_id);
   db.any(
-    `SELECT songs.id AS song_id, title, img_url, songs.user_id, genre_id, username, genre_name, COUNT(favorites.user_id) AS favorite_count, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM songs JOIN genres ON genres.id = songs.genre_id JOIN users ON songs.user_id = users.id JOIN comments ON comments.song_id = songs.id JOIN favorites ON favorites.song_id = songs.id  WHERE genres.id = $1 GROUP BY songs.id, users.username, genres.genre_name ORDER BY favorite_count DESC`, [genreId]
+    `SELECT songs.id AS song_id, title, img_url, songs.user_id, genre_id, username, genre_name, COUNT(favorites.user_id) AS favorite_count, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM songs LEFT JOIN genres ON genres.id = songs.genre_id LEFT JOIN users ON songs.user_id = users.id LEFT JOIN comments ON comments.song_id = songs.id LEFT JOIN favorites ON favorites.song_id = songs.id  WHERE genres.id = $1 GROUP BY songs.id, users.username, genres.genre_name ORDER BY favorite_count DESC`, [genreId]
   )
   .then(songs => {
     res.status(200).json({

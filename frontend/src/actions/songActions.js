@@ -1,4 +1,4 @@
-import { FETCH_ALL_SONGS, FETCH_ALL_SONGS_BY_POPULARITY, FETCH_ALL_SONGS_POSTED_BY_SPECIFIC_USER, FETCH_ALL_SONGS_BY_GENRE, POST_NEW_SONG, ADD_COMMENT_FOR_SINGLE_SONG } from './types';
+import { FETCH_ALL_SONGS, FETCH_ALL_SONGS_BY_POPULARITY, FETCH_ALL_SONGS_POSTED_BY_SPECIFIC_USER, FETCH_ALL_SONGS_BY_GENRE, POST_NEW_SONG } from './types';
 import axios from 'axios';
 
 
@@ -49,39 +49,16 @@ export const fetchAllSongsPostedForSpecificGenre = (genre_id) => dispatch => {
     })
   })
 }
-//
-// export const createPost = (postData) => dispatch => {
-//   axios.post('/posts',  postData)
-//   .then(post => {
-//     dispatch ({
-//       type: NEW_POST,
-//       payload: post.data.body
-//     })
-//   })
-// }
+
 
 export const postNewSong = (songData) => dispatch => {
   axios.post('/songs', songData)
   .then (song => {
-    console.log('POSTING NEW SONG', song);
-    debugger
+    // console.log('POSTING NEW SONG', song);
+    // debugger
     dispatch ({
       type: POST_NEW_SONG,
       payload: song.data.body
     })
-  })
-}
-
-export const postSingleSongComment = (user_id, song_id, addComment) => dispatch => {
-  axios.post(`/comments/${song_id}`, addComment)
-  .then(res => {
-    console.log('POSTING COMMENT SUCCESS',res);
-    debugger
-    dispatch({
-      type: ADD_COMMENT_FOR_SINGLE_SONG,
-      payload: res.data.add_single_song_comment
-    })
-  }).catch(err => {
-    console.log('FAILED TO POST COMMENT', err)
   })
 }
