@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
+// import '../../css/home/Home.css';
 
 import { fetchAllSongs } from '../../actions/songActions';
 import { fetchAllSongsPostedForSpecificGenre } from '../../actions/songActions';
@@ -8,7 +8,6 @@ import { fetchAllGenres } from '../../actions/genreActions';
 
 import SingleSong from './SingleSong'
 
-// import '../../css/home/Home.css';
 
 class SongsByGenreId extends Component {
   state = {
@@ -25,12 +24,7 @@ class SongsByGenreId extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-
-    // console.log('SELECTED GENRE', this.state.selectedGenre);
-    // console.log('FORM SUBMITTED', this.state.formSubmitted);
     this.props.fetchAllSongsPostedForSpecificGenre(this.state.selectedGenre)
-    // debugger
-
     this.setState({
       formSubmitted: true,
     })
@@ -43,12 +37,10 @@ class SongsByGenreId extends Component {
 
 
   render () {
-    // console.log(this.props);
-    // console.log(this.state);
+    // console.log(this.props);   console.log(this.state);
 
     const { selectedGenre, formSubmitted } = this.state;
     const { all_songs, all_songs_by_genre, all_genres } = this.props;
-
 
     let songFilter = all_songs;
     if (selectedGenre && formSubmitted) {
@@ -60,7 +52,9 @@ class SongsByGenreId extends Component {
 
     const songItems = songFilter.map(song => {
       return(
-        <SingleSong song={song} />
+        <div key={song.song_id}>
+          <SingleSong song={song} />
+        </div>
       )
     })
 

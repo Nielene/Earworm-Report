@@ -1,9 +1,9 @@
 const { db } = require('../index.js');
 
 
-// Postman: http://localhost:3000/users
+// Postman: http://localhost:3000/favorites
 const getAllFavorites = (req, res, next) => {
-  db.any('SELECT users.id AS user_id, username, songs.id AS song_id, title, img_url, genre_id, genre_name FROM favorites JOIN users ON favorites.user_id = users.id JOIN songs ON favorites.song_id = songs.id JOIN genres ON genres.id = songs.genre_id')
+  db.any('SELECT users.id AS user_id, username, songs.id AS song_id, title, img_url, genre_id, genre_name FROM favorites LEFT JOIN users ON favorites.user_id = users.id LEFT JOIN songs ON favorites.song_id = songs.id LEFT JOIN genres ON genres.id = songs.genre_id')
   .then(favorites => {
     res.status(200)
     res.json({
@@ -22,11 +22,11 @@ const getAllFavorites = (req, res, next) => {
   })
 }
 
-
+// favorites/song/:song_id
 const getAllFavoritesForSpecificSong = (req, res, next) => {
   let songId = parseInt(req.params.song_id);
   db.any(
-    `SELECT favorites.song_id AS song_id, title, img_url, songs.user_id, username, genre_id FROM favorites JOIN songs ON favorites.song_id = songs.id JOIN genres ON songs.genre_id = genres.id JOIN users ON users.id = songs.user_id WHERE users.id = $1 GROUP BY genres.id, users.id, songs.id, favorites.song_id`, [songId]
+    `SELECT favorites.song_id AS song_id, title, img_url, users.id, username, genre_id, genre_name, COUNT(favorites.song_id) AS favorite_count, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM favorites LEFT JOIN songs ON favorites.song_id=songs.id LEFT JOIN users ON favorites.user_id=users.id LEFT JOIN genres ON genres.id=songs.genre_id LEFT JOIN comments ON comments.song_id = songs.id WHERE songs.id = $1 GROUP BY favorites.song_id, songs.title,users.id, songs.genre_id, genres.genre_name, songs.img_url`, [songId]
   )
   .then(songs => {
     res.status(200).json({
@@ -55,7 +55,7 @@ const getAllFavoritesForSpecificUser = (req, res, next) => {
     // `SELECT favorites.song_id AS song_id, title, img_url, songs.user_id, username, genre_id FROM favorites JOIN songs ON favorites.song_id = songs.id JOIN genres ON songs.genre_id = genres.id JOIN users ON users.id = songs.user_id WHERE users.id = $1 GROUP BY genres.id, users.id, songs.id, favorites.song_id`, [userId]
     // `SELECT favorites.song_id as song_id, title, img_url, users.id, username, genre_id, genre_name FROM favorites JOIN songs ON favorites.song_id=songs.id JOIN users ON favorites.user_id=users.id JOIN genres ON genres.id=songs.genre_id WHERE users.id = $1`, [userId]
     // `SELECT favorites.song_id AS song_id, title, img_url, users.id, username, genre_id, genre_name, COUNT(favorites.user_id) AS favorite_count FROM favorites JOIN songs ON favorites.song_id=songs.id JOIN users ON favorites.user_id=users.id JOIN genres ON genres.id=songs.genre_id WHERE users.id = $1 GROUP BY favorites.song_id, songs.title,users.id, songs.genre_id, genres.genre_name, songs.img_url`, [userId]
-    `SELECT favorites.song_id AS song_id, title, img_url, users.id, username, genre_id, genre_name, COUNT(favorites.user_id) AS favorite_count, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM favorites JOIN songs ON favorites.song_id=songs.id JOIN users ON favorites.user_id=users.id JOIN genres ON genres.id=songs.genre_id JOIN comments ON comments.song_id = songs.id WHERE users.id = $1 GROUP BY favorites.song_id, songs.title,users.id, songs.genre_id, genres.genre_name, songs.img_url`, [userId]
+    `SELECT favorites.song_id AS song_id, title, img_url, users.id, username, genre_id, genre_name, COUNT(favorites.user_id) AS favorite_count, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM favorites LEFT JOIN songs ON favorites.song_id=songs.id LEFT JOIN users ON favorites.user_id=users.id LEFT JOIN genres ON genres.id=songs.genre_id LEFT JOIN comments ON comments.song_id = songs.id WHERE users.id = $1 GROUP BY favorites.song_id, songs.title,users.id, songs.genre_id, genres.genre_name, songs.img_url`, [userId]
     // `SELECT favorites.user_id AS user_id, title, img_url, songs.user_id, username, genre_id, genre_name, COUNT(favorites.user_id) AS favorite_count, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM favorites JOIN songs ON favorites.song_id = songs.id JOIN genres ON songs.genre_id = genres.id JOIN users ON users.id = songs.user_id JOIN comments ON comments.song_id = songs.id WHERE users.id = $1 GROUP BY genres.id, users.id, songs.id, favorites.song_id`, [userId]
   )
   .then(songs => {
@@ -76,16 +76,13 @@ const getAllFavoritesForSpecificUser = (req, res, next) => {
   })
 }
 
-//UNTESTED:
+// POST http://localhost:3100/favorites/
 const postNewFavorite = (req, res, next) => {
   db.none(
-    'INSERT INTO songs(song_id, user_id, title, img_url, genre_id) VALUES(${song_id}, ${user_id}, ${title}, ${img_url}, ${genre_id})', {
-      ...req.body,  // just added
+    'INSERT INTO favorites(song_id, user_id) VALUES(${song_id}, ${user_id})', {
+      // ...req.body,  // just added
       song_id: req.body.song_id,
-      user_id: req.body.user_id,
-      title: req.body.title,
-      img_url: req.body.img_url,
-      genre_id: req.body.genre_id
+      user_id: req.body.user_id
     }
   ).then (() => {
     res.status(200)
@@ -105,7 +102,7 @@ const postNewFavorite = (req, res, next) => {
   })
 }
 
-//UNTESTED:
+// http://localhost:3100/favorites/45     router.delete  '/:favorite_id'
 const deleteSingleFavorite = (req, res, next) => {
   let favoriteId = parseInt(req.params.favorite_id);
   db.result('DELETE FROM favorites WHERE favorites.id =$1', [favoriteId])

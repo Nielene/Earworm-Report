@@ -73,14 +73,12 @@ class MyUserProfile extends Component {
     this.props.postNewSong(songData)
 
     this.props.fetchAllSongsPostedBySpecificUser(this.state.user_id);
-    console.log('THIS.STATE USER PROFILE', this.state);
-    // reference:
-    // (function() {
-    //   alert( `Your song has beed added. ` )
-    // })()
+
+    // REFERENCE:
+      // (function() {
+      //   alert( `Your song has beed added. ` )
+      // })()
   }
-
-
 
 
   componentDidMount() {
@@ -94,7 +92,7 @@ class MyUserProfile extends Component {
   }
 
   render () {
-    console.log('MyUserProfile props', this.props);
+    // console.log('MyUserProfile props', this.props);
     // console.log('MyUserProfile', this.props.single_user.username);
 
     let songArray = this.props.all_songs_by_user;
@@ -107,7 +105,9 @@ class MyUserProfile extends Component {
     const username = this.props.single_user.username;
 
     const songItems = songArray.map(song => (
-      < SingleSong song = {song} />
+      <div key={song.song_id}>
+        < SingleSong song = {song} />
+      </div>
     ))
 
     const genreItems = this.props.all_genres.map(genre => {

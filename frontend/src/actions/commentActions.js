@@ -3,9 +3,7 @@ import axios from 'axios';
 
 
 export const fetchAllCommentsForSingleSong = (song_id) => dispatch => {
-  console.log('commentActions console log');
   axios.get(`/comments/${song_id}`)
-  // axios.get(`/comments/`)
   .then(res => {
     // console.log(res.data);
     // debugger
@@ -20,7 +18,6 @@ export const fetchAllCommentsForSingleSong = (song_id) => dispatch => {
 }
 
 export const postSingleSongComment = (song_id, commentData) => dispatch => {
-  console.log('HELLO');
   axios.post(`/comments/${song_id}`, commentData)
   .then(res => {
     // console.log('POSTING COMMENT SUCCESS',res);

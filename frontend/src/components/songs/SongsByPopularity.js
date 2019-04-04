@@ -4,7 +4,6 @@ import { fetchAllSongsByPopularity } from '../../actions/songActions';
 import SingleSong from './SingleSong'
 
 
-
 class SongsByPopularity extends Component {
   state = {
     searchedSong: '',
@@ -22,7 +21,6 @@ class SongsByPopularity extends Component {
     e.preventDefault();
     this.setState({
       formSubmitted: true,
-
     })
   }
 
@@ -32,7 +30,7 @@ class SongsByPopularity extends Component {
 
 
   render () {
-    // console.log(this.props); console.log(this.state);
+    console.log(this.props);  console.log(this.state);
 
     const { searchedSong, formSubmitted } = this.state;
     const { all_songs_by_popularity } = this.props;
@@ -41,12 +39,14 @@ class SongsByPopularity extends Component {
       return song.title.toLowerCase().includes(searchedSong.toLowerCase())
     })
 
+
     let songArray = all_songs_by_popularity;
     if (!formSubmitted) {
       songArray = all_songs_by_popularity
     } else if (formSubmitted) {
       songArray = filteredSongs
     }
+
 
     const songItems = songArray.map(song => {
       if (song.user_id === 1) {

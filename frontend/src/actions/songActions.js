@@ -17,8 +17,8 @@ export const fetchAllSongs = () => dispatch => {
 export const fetchAllSongsByPopularity = () => dispatch => {
   axios.get('/songs/byPopularity')
   .then(res => {
-    // console.log(res.data);
-    // debugger
+    console.log(res.data);
+    debugger
     dispatch ({
       type: FETCH_ALL_SONGS_BY_POPULARITY,
       payload: res.data.songs

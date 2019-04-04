@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { fetchAllCommentsForSingleSong, postSingleSongComment } from '../../actions/commentActions';
 // import SingleSongComments from './SingleSongComments'
-
+import { postNewFavorite } from '../../actions/favoriteActions';
 
 
 class SingleSong extends Component {
@@ -12,9 +12,9 @@ class SingleSong extends Component {
     comment: '',
     user_id: 1,
     song_id: this.props.song.song_id,
-    username: this.props.song.username,
+    username: 'Nielene',
 
-    favoriteSongButtonColor: 'blue',
+    favoriteSongButtonColor: 'yellow',
     favoriteButtonClicked: false,
   }
 
@@ -25,20 +25,25 @@ class SingleSong extends Component {
   onFavoriteThisSong = () => {
     this.setState ({
       favoriteButtonClicked: true,
-      favoriteSongButtonColor: 'yellow',
+      favoriteSongButtonColor: 'blue',
     })
+    const favoriteData = {
+      user_id: this.state.user_id,
+      song_id: this.state.song_id,
+    }
+    this.props.postNewFavorite(favoriteData)
   }
+
 
   onUnfavoriteThisSong = () => {
     this.setState ({
       favoriteButtonClicked: false,
-      favoriteSongButtonColor: 'blue',
+      favoriteSongButtonColor: 'yellow',
     })
   }
 
   handleCommentChange = e => {
     this.setState({ [e.target.name]: e.target.value });
-    console.log(this.state);
   }
 
   handleCommentSubmit = e => {
@@ -53,14 +58,26 @@ class SingleSong extends Component {
     }
 
     this.props.postSingleSongComment(this.state.song_id, commentData)
-    console.log('THIS.STATE SINGLE SONG COMMENT', this.state);
     // this.props.fetchAllCommentsForSingleSong(this.props.song.song_id)
-
   }
 
 
   componentDidMount() {
     this.props.fetchAllCommentsForSingleSong(this.props.song.song_id)
+  }
+
+
+  indicateFavorites = () => {
+    const { all_favorites_by_user} = this.props
+
+    if (all_favorites_by_user) {
+      const favorites = all_favorites_by_user.map(favorite => {
+        return (
+          <div>
+          </div>
+        )
+      })
+    }
   }
 
 
@@ -74,7 +91,7 @@ class SingleSong extends Component {
         }
 
         return (
-          <div>
+          <div key={comment.comment_id}>
             <div className='userName'>
               <Link to={'/profile/' + comment.user_id} style={{textDecoration: 'none'}} onClick={this.handleClickUsername} >
                 <p>{comment.username} </p>
@@ -96,11 +113,9 @@ class SingleSong extends Component {
 
 
 render () {
-  // console.log('SINGLE SONG COMMENTS', this.props.single_song_comments);
-  // console.log('song id', this.props.song.song_id);
-  console.log(this.state);
+  // console.log('SINGLE SONG COMMENTS', this.props.single_song_comments);  console.log('song id', this.props.song.song_id);   console.log(this.state);
 
-  // Keep for Records:
+  // KEEP FOR RECORDS:
   // const testComments = this.props.single_song_comments.map(comment => {
   //   return (  <div key={comment.comment_id}>  < SingleSongComments comment={comment} />  </div> )
   // })
@@ -143,7 +158,6 @@ render () {
                   style={{backgroundColor:this.state.favoriteSongButtonColor}}
                   onClick={ this.state.favoriteButtonClicked ? this.onUnfavoriteThisSong : this.onFavoriteThisSong} >
                     {this.state.favoriteButtonClicked ? 'Unfavorite' : 'Favorite'}
-
                 </button>
               </div>
             </div>
@@ -177,11 +191,13 @@ render () {
 
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('STATETOPROPS. STATE',state);
+  // console.log('STATETOPROPS. STATE',state);
   return {
 
     single_song_comments: state.comments.songs_to_comments_map[ownProps.song.song_id],
     song_comments: state.comments.songs_to_comments_map[ownProps.song.song_id],
+    post_new_favorite: state.favorites.post_new_favorite,
+    all_favorites_by_user: state.favorites.all_favorites_by_user,
   }
 }
 
@@ -189,7 +205,7 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchAllCommentsForSingleSong: (song_id) => dispatch(fetchAllCommentsForSingleSong(song_id)),
     postSingleSongComment: (song_id, commentData) => dispatch(postSingleSongComment(song_id, commentData)),
-
+    postNewFavorite: (favoriteData) => dispatch(postNewFavorite(favoriteData)),
   }
 }
 
