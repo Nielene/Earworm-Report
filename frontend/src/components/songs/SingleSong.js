@@ -12,6 +12,7 @@ class SingleSong extends Component {
     comment: '',
     user_id: 1,
     song_id: this.props.song.song_id,
+    username: this.props.song.username,
   }
 
   handleClick = e => {
@@ -31,6 +32,7 @@ class SingleSong extends Component {
       // song_id: this.state.song_id,
       user_id: this.state.user_id,
       comment_body: this.state.comment,
+      username: this.state.username,
     }
 
     this.props.postSingleSongComment(this.state.song_id, commentData)
