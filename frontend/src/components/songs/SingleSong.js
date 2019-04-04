@@ -13,10 +13,27 @@ class SingleSong extends Component {
     user_id: 1,
     song_id: this.props.song.song_id,
     username: this.props.song.username,
+
+    favoriteSongButtonColor: 'blue',
+    favoriteButtonClicked: false,
   }
 
-  handleClick = e => {
+  handleClickUsername = (e) => {
     this.props.fetchAllSongsPostedBySpecificUser(this.props.song.user_id)
+  }
+
+  onFavoriteThisSong = () => {
+    this.setState ({
+      favoriteButtonClicked: true,
+      favoriteSongButtonColor: 'yellow',
+    })
+  }
+
+  onUnfavoriteThisSong = () => {
+    this.setState ({
+      favoriteButtonClicked: false,
+      favoriteSongButtonColor: 'blue',
+    })
   }
 
   handleCommentChange = e => {
@@ -59,7 +76,7 @@ class SingleSong extends Component {
         return (
           <div>
             <div className='userName'>
-              <Link to={'/profile/' + comment.user_id} style={{textDecoration: 'none'}} onClick={this.handleClick} >
+              <Link to={'/profile/' + comment.user_id} style={{textDecoration: 'none'}} onClick={this.handleClickUsername} >
                 <p>{comment.username} </p>
               </Link>
             </div>
@@ -78,22 +95,15 @@ class SingleSong extends Component {
   }
 
 
+render () {
+  // console.log('SINGLE SONG COMMENTS', this.props.single_song_comments);
+  // console.log('song id', this.props.song.song_id);
+  console.log(this.state);
 
-
-
-
-
-  render () {
-    // console.log('SINGLE SONG COMMENTS', this.props.single_song_comments);
-    // console.log('song id', this.props.song.song_id);
-    console.log(this.state);
-
-    // Keep for Records:
-    // const testComments = this.props.single_song_comments.map(comment => {
-    //   return (  <div key={comment.comment_id}>  < SingleSongComments comment={comment} />  </div> )
-    // })
-
-
+  // Keep for Records:
+  // const testComments = this.props.single_song_comments.map(comment => {
+  //   return (  <div key={comment.comment_id}>  < SingleSongComments comment={comment} />  </div> )
+  // })
 
   return (
     <div key={this.props.song.song_id} className= 'eachSongListDiv'>
@@ -129,7 +139,12 @@ class SingleSong extends Component {
               </div>
 
               <div className='favoriteButton'>
-                <button> Favorite </button>
+                <button type='button'
+                  style={{backgroundColor:this.state.favoriteSongButtonColor}}
+                  onClick={ this.state.favoriteButtonClicked ? this.onUnfavoriteThisSong : this.onFavoriteThisSong} >
+                    {this.state.favoriteButtonClicked ? 'Unfavorite' : 'Favorite'}
+
+                </button>
               </div>
             </div>
           </div>
