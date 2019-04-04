@@ -14,6 +14,10 @@ class SingleSong extends Component {
     song_id: this.props.song.song_id,
   }
 
+  handleClick = e => {
+    this.props.fetchAllSongsPostedBySpecificUser(this.props.song.user_id)
+  }
+
   handleCommentChange = e => {
     this.setState({ [e.target.name]: e.target.value });
     console.log(this.state);
@@ -46,7 +50,24 @@ class SingleSong extends Component {
 
     if (song_comments) {
       const comments =  song_comments.map( comment => {
-        return <div> {comment.comment_body} </div>
+        if (comment.user_id === 1) {
+          comment.user_id = '';
+        }
+
+        return (
+          <div>
+            <div className='userName'>
+              <Link to={'/profile/' + comment.user_id} style={{textDecoration: 'none'}} onClick={this.handleClick} >
+                <p>{comment.username} </p>
+              </Link>
+            </div>
+
+            <div className='commentBody'>
+              {comment.comment_body}
+            </div>
+          </div>
+        )
+
       })
       return comments
     } else {

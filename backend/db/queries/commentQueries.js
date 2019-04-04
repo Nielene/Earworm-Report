@@ -26,7 +26,8 @@ const getAllCommentsForSpecificSong = (req, res, next) => {
   let songId = parseInt(req.params.song_id);
   // let songId = parseInt(req.body.song_id);
   db.any(
-    `SELECT songs.id AS song_id, comments.id AS comment_id, comment_body FROM songs LEFT JOIN comments ON songs.id = comments.song_id WHERE songs.id = $1 GROUP BY songs.id, comments.id`, [songId]
+    // `SELECT songs.id AS song_id, comments.id AS comment_id, comment_body FROM songs LEFT JOIN comments ON songs.id = comments.song_id WHERE songs.id = $1 GROUP BY songs.id, comments.id`, [songId]
+    `SELECT songs.id AS song_id, comments.id AS comment_id, comment_body, comments.user_id AS user_id, username FROM songs LEFT JOIN comments ON songs.id = comments.song_id LEFT JOIN users ON comments.user_id=users.id WHERE songs.id = $1 GROUP BY songs.id, comments.id, users.username`, [songId]
   )
   .then(comments => {
     res.status(200).json({
