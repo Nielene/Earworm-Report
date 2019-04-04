@@ -49,7 +49,6 @@ const getAllCommentsForSpecificSong = (req, res, next) => {
 
 
 const postNewComment = (req, res, next) => {
-  // db.none("INSERT INTO comments(comment_body, user_id, song_id, username) VALUES(${comment_body}, ${user_id}, ${song_id}, ${username})", {
   db.none("INSERT INTO comments(comment_body, user_id, song_id) VALUES(${comment_body}, ${user_id}, ${song_id})", {
     // ...req.body,
     song_id: parseInt(req.params.song_id),
@@ -57,14 +56,6 @@ const postNewComment = (req, res, next) => {
     comment_body: req.body.comment_body,
     // username: req.body.username
   })
-  // .then(() => {
-  //   db.none("INSERT INTO users(user_id, username) VALUES(${user_id}, ${username})", {
-  //     // ...req.body,
-  //     user_id: req.body.user_id,
-  //     username: req.body.username,
-  //     // username: req.body.username
-  //   })
-  // })
   .then(() => {
     res.status(200).json({
       status: "success",
