@@ -26,7 +26,7 @@ const getAllFavorites = (req, res, next) => {
 const getAllFavoritesForSpecificSong = (req, res, next) => {
   let songId = parseInt(req.params.song_id);
   db.any(
-    `SELECT favorites.song_id AS song_id, title, img_url, users.id, username, genre_id, genre_name, COUNT(favorites.song_id) AS favorite_count, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM favorites LEFT JOIN songs ON favorites.song_id=songs.id LEFT JOIN users ON favorites.user_id=users.id LEFT JOIN genres ON genres.id=songs.genre_id LEFT JOIN comments ON comments.song_id = songs.id WHERE songs.id = $1 GROUP BY favorites.song_id, songs.title,users.id, songs.genre_id, genres.genre_name, songs.img_url`, [songId]
+    `SELECT COUNT(favorites.song_id) FROM favorites WHERE song_id = $1`, [songId]
   )
   .then(songs => {
     res.status(200).json({
@@ -49,33 +49,7 @@ const getAllFavoritesForSpecificSong = (req, res, next) => {
 // http://localhost:3100/favorites/user/1
 const getAllFavoritesForSpecificUser = (req, res, next) => {
   let userId = parseInt(req.params.user_id);
-  // let songId = req.body.song_id;
-  // db.any ( `SELECT favorites.song_id AS song_id, title, img_url, users.id, username, genre_id, genre_name, COUNT(favorites.song_id) AS favorite_count, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM favorites LEFT JOIN songs ON favorites.song_id=songs.id LEFT JOIN users ON favorites.user_id=users.id LEFT JOIN genres ON genres.id=songs.genre_id LEFT JOIN comments ON comments.song_id = songs.id WHERE users.id = $1 GROUP BY favorites.song_id, songs.title,users.id, songs.genre_id, genres.genre_name, songs.img_url`, [userId] )
-  // .then(songs => {
-  //   res.status(200).json({
-  //     status: 'success',
-  //     songs: songs,
-  //     message: 'Songs by Genre Received!'
-  //   })
-  // })
-
-
-
-  // db.any(`SELECT song_id FROM favorites WHERE user_id = $1`, [userId])
-  // .then (favorites => {
-  //   favoriteDetails = {...favorites}
-
-  // db.any (`SELECT favorites.song_id AS song_id, favorites.user_id AS user_id FROM favorites`)
-  // .then (favorites => {
-  //   favoriteDetails = {...favorites}
-
-// all songs user favorited one db statement
-// map over all songs and for each song, retrieve the favorites count for one.
-
-
-
-
-db.any ( `SELECT favorites.id AS favorite_id, favorites.user_id, favorites.song_id, songs.* FROM favorites JOIN songs ON favorites.song_id=songs.id WHERE favorites.user_id = $1`, [userId] )
+db.any ( `SELECT favorites.id AS favorite_id, favorites.user_id, favorites.song_id, songs.*, users.username FROM favorites LEFT JOIN songs ON favorites.song_id=songs.id LEFT JOIN users ON users.id=songs.user_id WHERE favorites.user_id = $1`, [userId] )
 .then (favoriteSongs => {
     res.status(200).json({
       status: 'success',
@@ -83,32 +57,6 @@ db.any ( `SELECT favorites.id AS favorite_id, favorites.user_id, favorites.song_
       message: 'Songs by Genre Received!'
     })
 })
-
-
-
-
-  //   db.any (`SELECT songs.id, songs.title, img_url FROM songs`)
-  //   .then (songs => {
-  //     favoriteDetails = {...songs}
-  //     db.any (`SELECT users.id, username FROM users WHERE users.id = $1`, [userId])
-  //     .then (users => {
-  //       favoriteDetails = {...favoriteDetails, users: users}
-  //       db.any (`SELECT genres.id, genre_name FROM genres`)
-  //       .then(genres => {
-  //         favoriteDetails = {...favoriteDetails, genres: genres}
-  //         db.any (`SELECT favorites.id, favorites.song_id AS song_id, favorites.user_id AS user_id, COUNT(favorites.song_id) FROM favorites WHERE song_id= $1`, [songId])
-  //         .then (favorites => {
-  //           favoriteDetails= {...favoriteDetails, favorites: favorites}
-  //           res.status(200).json({
-  //             status: 'success',
-  //             body: favoriteDetails,
-  //             message: 'Songs by Genre Received!'
-  //           })
-  //         })
-  //       })
-  //     })
-  //   })
-  // })
   .catch(err => {
     res.status(400)
     .json({
