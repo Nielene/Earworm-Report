@@ -192,6 +192,7 @@ render () {
 
 const mapStateToProps = (state, ownProps) => {
   // console.log('STATETOPROPS. STATE',state);
+
   return {
 
     single_song_comments: state.comments.songs_to_comments_map[ownProps.song.song_id],
