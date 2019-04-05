@@ -34,6 +34,9 @@ CREATE TABLE favorites (
   song_id INT REFERENCES songs(id) ON DELETE CASCADE
 );
 
+ALTER TABLE favorites
+ADD CONSTRAINT UQ_user_id_song_id UNIQUE(user_id, song_id);
+
 CREATE TABLE comments (
   id SERIAL PRIMARY KEY,
   comment_body TEXT,
@@ -83,8 +86,7 @@ VALUES (1 , 1), (2 , 2), (3 , 3), (4 , 4), (5 , 5), (6 , 6), (7 , 7), (8 , 8), (
 (1 , 11), (2 , 12), (3 , 13), (4 , 14), (5 , 15), (6 , 1), (7 , 2), (8 , 3), (9 , 4), (10 , 5),
 (1 , 6), (2 , 7), (3 , 8), (4 , 9), (5 , 10), (6 , 11), (7 , 12), (8 , 13), (9 , 14), (10 , 15),
 (1 , 15), (2 , 14), (3 , 1), (4 , 12), (5 , 11), (6 , 10), (7 , 9), (8 , 4), (9 , 7), (10 , 6),
-(1, 7), (2, 8), (3, 7), (3, 8);
-
+(1 , 7), (2, 8), (3, 7);
 
 
 -- escape quotes in sql

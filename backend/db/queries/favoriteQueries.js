@@ -50,17 +50,16 @@ const getAllFavoritesForSpecificSong = (req, res, next) => {
 const getAllFavoritesForSpecificUser = (req, res, next) => {
   let userId = parseInt(req.params.user_id);
   // let songId = req.body.song_id;
-  db.any ( `SELECT favorites.song_id AS song_id, title, img_url, users.id, username, genre_id, genre_name, COUNT(favorites.user_id) AS favorite_count, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM favorites LEFT JOIN songs ON favorites.song_id=songs.id LEFT JOIN users ON favorites.user_id=users.id LEFT JOIN genres ON genres.id=songs.genre_id LEFT JOIN comments ON comments.song_id = songs.id WHERE users.id = $1 GROUP BY favorites.song_id, songs.title,users.id, songs.genre_id, genres.genre_name, songs.img_url`, [userId] )
-  .then(songs => {
-    res.status(200).json({
-      status: 'success',
-      songs: songs,
-      message: 'Songs by Genre Received!'
-    })
-  })
+  // db.any ( `SELECT favorites.song_id AS song_id, title, img_url, users.id, username, genre_id, genre_name, COUNT(favorites.song_id) AS favorite_count, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM favorites LEFT JOIN songs ON favorites.song_id=songs.id LEFT JOIN users ON favorites.user_id=users.id LEFT JOIN genres ON genres.id=songs.genre_id LEFT JOIN comments ON comments.song_id = songs.id WHERE users.id = $1 GROUP BY favorites.song_id, songs.title,users.id, songs.genre_id, genres.genre_name, songs.img_url`, [userId] )
+  // .then(songs => {
+  //   res.status(200).json({
+  //     status: 'success',
+  //     songs: songs,
+  //     message: 'Songs by Genre Received!'
+  //   })
+  // })
 
 
-  // let favoriteDetails = {}
 
   // db.any(`SELECT song_id FROM favorites WHERE user_id = $1`, [userId])
   // .then (favorites => {
@@ -70,18 +69,23 @@ const getAllFavoritesForSpecificUser = (req, res, next) => {
   // .then (favorites => {
   //   favoriteDetails = {...favorites}
 
-all songs user favorited one db statement
-map over all songs and for each song, retrieve the favorites cout for one.
+// all songs user favorited one db statement
+// map over all songs and for each song, retrieve the favorites count for one.
 
-db.any ( `SELECT favorites.id, favorites.song_id, title, img_url, genres.id AS genre_id, genre_name, users.id, username, ARRAY_AGG(DISTINCT comments.comment_body) AS comment_body FROM favorites JOIN songs ON songs.id=favorites.song_id JOIN genres ON genres.id=songs.genre_id JOIN users ON users.id=favorites.user_id JOIN comments ON comments.song_id = songs.id GROUP BY favorites.id, favorites.user_id, favorites.song_id, songs.title, songs.img_url, genres.id, users.id ORDER BY favorites.id` )
-.then (favorites => {
-  favoriteDetails = {...favorites}
-  db.any (`SELECT song_id FROM favorites WHERE user_id = $1`, [userId])
-  .then (songs => {
-    favoriteDetails = { ...favoriteDetails, songs: songs}
-    db.one (`SELECT COUNT(favorites.song_id) AS favorites_count FROM favorites`)
-  })
+
+
+
+db.any ( `SELECT favorites.id AS favorite_id, favorites.user_id, favorites.song_id, songs.* FROM favorites JOIN songs ON favorites.song_id=songs.id WHERE favorites.user_id = $1`, [userId] )
+.then (favoriteSongs => {
+    res.status(200).json({
+      status: 'success',
+      songs: favoriteSongs,
+      message: 'Songs by Genre Received!'
+    })
 })
+
+
+
 
   //   db.any (`SELECT songs.id, songs.title, img_url FROM songs`)
   //   .then (songs => {
@@ -150,7 +154,7 @@ const deleteSingleFavorite = (req, res, next) => {
     res.status(200)
     .json({
       status: 'success',
-      message: 'You DELETED this FAVORITE SONG.'
+      message: 'You DELETED this FAVORITE SONG.',
     })
   }).catch(err => {
     res.status(400)
