@@ -1,3 +1,9 @@
+// Ordered correctly but favoriting still not working
+// appropriately. When I like something it get incremented by 2.
+// Must be getting duplicate info...
+
+//Popularity shouldn't have any search bar. 
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchAllSongsByPopularity } from '../../actions/songActions';

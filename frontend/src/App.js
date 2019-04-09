@@ -1,3 +1,9 @@
+// This project has come a really long ways since the initial 
+// submission. Great job on that.
+// I would still like you to revisit this after capstone to get
+// the favoriting fully functional. I think that would be a worthwile
+// expenditure. Besides that, very good job on this!
+
 import React, { Component } from 'react';
 // import '../css/App.css';
 import { Route, Switch } from 'react-router-dom';

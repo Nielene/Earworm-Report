@@ -1,3 +1,14 @@
+//Your styling looks so much better! Thanks!
+// Favoriting NOT fully working. Pretends to work on
+// frontend but all songs always default to being unfavorited.
+// Unfavorite also does not work yet.
+
+//Glad to see your comments are working. The button should be in
+// a form and listening to onSubmit instead of onClick.
+
+//Search works, but after first search it resets on any
+// change. Not what was asked but no requirement to change this. 
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
