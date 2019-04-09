@@ -1,3 +1,7 @@
+//Genres are reseting the change. This leads to
+// unfriendly user experience. Wait to make a change to the list
+// until search is entered.
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import '../../css/home/Home.css';
