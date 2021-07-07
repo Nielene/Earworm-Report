@@ -1,3 +1,20 @@
+// Hey, so it looks like there hasn't been any
+// commits from you since I made my last review / PR.
+// Have there been changes I'm not seeing ?
+//App is missing most of it's core functionality
+// as well as it's styling.
+//Favoriting doesn't work.
+//No where to make comments.
+// Can't seem to add a song.
+// Profile doesn't show toggle / nor does it toggle.
+//byPopularity page is empty...
+//and STYLING.
+//Please clean console.
+//Not sure what happened or why it appears you quit
+// working on it :-( there's still a long
+// ways to go on this one. 
+
+
 import React, { Component } from 'react';
 // import '../css/App.css';
 import { Route, Switch } from 'react-router-dom';

@@ -1,3 +1,7 @@
+// Warning the window.__REDUX_DEVTOOLS_EXTENSION__ stuff doesn't 
+// work for people unless it's set up (thats why
+// I've commented it out.)
+
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 //he had './reducers.js' without needing /index.js
@@ -13,7 +17,7 @@ const store = createStore(
   initialState,
   compose(
     applyMiddleware(...middleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );
 
