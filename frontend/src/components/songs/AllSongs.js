@@ -1,3 +1,10 @@
+// Still missing the ability to do favoiriting and to read / write
+// comments.
+// Remove link on song title. Keeps routing to home page and
+// that is a negative user experience.
+// Search functionality is working nicely.
+
+//Good start so far. Keep up the good work!
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 

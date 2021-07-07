@@ -1,3 +1,6 @@
+// I recommend using NavLink here. Then you can style the 
+// active class. Please remove dead import code.
+
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 // import icon from '../../icons/iconfinder_Faint_2695614.png'

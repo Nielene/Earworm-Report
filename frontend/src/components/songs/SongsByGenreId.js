@@ -1,3 +1,10 @@
+// I don't want the results to reset upon making a
+// change to the select. I want them only to change
+// upon entering on the search. Please fix.
+
+// Also please add the functionality of favoriting and comments.
+ 
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import '../../css/home/Home.css';

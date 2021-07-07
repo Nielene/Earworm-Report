@@ -1,3 +1,10 @@
+// Not fully functional yet. No toggle between favorites 
+// and posted.
+// I think you can reuse and share more of the code between this and
+// UserProfile. No need for copy paste. Form not working.
+// I need to be able to add a pic and title for song.
+
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
